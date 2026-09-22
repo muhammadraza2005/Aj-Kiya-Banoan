@@ -1,4 +1,4 @@
-Yes. And honestly, this is a very good project idea for you, especially because it solves a real problem in your own house rather than being another generic CRUD app.
+Yessss. And honestly, this is a very good project idea for you, especially because it solves a real problem in your own house rather than being another generic CRUD app.
 
 The important thing is that we should not over-engineer it. Since you want to live-code it quickly and actually have your mom use it, I would build it as a rule-based personalized meal recommendation system, not an ML model. The intelligence will come from the data model + scoring algorithm.
 
