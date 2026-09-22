@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Aaj Kya Banaun? — Mobile Home</title>
+<!-- Google Fonts: Plus Jakarta Sans, Playfair Display, and Noto Nastaliq Urdu -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&amp;family=Playfair+Display:ital,wght@0,600;0,700;1,600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config directly from Design System -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-highest": "#d9e3f6",
+            "secondary": "#2a6b2c",
+            "on-secondary": "#ffffff",
+            "secondary-fixed-dim": "#91d78a",
+            "on-tertiary-container": "#ffe1d8",
+            "on-primary-fixed-variant": "#881f00",
+            "on-secondary-fixed-variant": "#0c5216",
+            "inverse-on-surface": "#eaf1ff",
+            "primary-fixed-dim": "#ffb5a1",
+            "on-primary-fixed": "#3b0800",
+            "secondary-fixed": "#acf4a4",
+            "surface-dim": "#d0dbed",
+            "surface-container-lowest": "#ffffff",
+            "on-surface-variant": "#5a413a",
+            "tertiary": "#8f2f00",
+            "border-subtle": "#E5E1DA",
+            "on-primary": "#ffffff",
+            "surface-container": "#e6eeff",
+            "surface": "#f8f9ff",
+            "tertiary-fixed-dim": "#ffb59a",
+            "surface-container-high": "#dee9fc",
+            "warm-gray": "#6B7280",
+            "on-error": "#ffffff",
+            "surface-pure": "#FFFFFF",
+            "terracotta-clay": "#BF360C",
+            "on-tertiary-fixed-variant": "#802a00",
+            "background": "#f8f9ff",
+            "error-container": "#ffdad6",
+            "tertiary-fixed": "#ffdbcf",
+            "outline-variant": "#e2bfb6",
+            "secondary-container": "#acf4a4",
+            "on-secondary-container": "#307231",
+            "cardamom-emerald": "#1B5E20",
+            "primary-container": "#bf360c",
+            "on-tertiary-fixed": "#380d00",
+            "outline": "#8e7069",
+            "surface-container-low": "#eff4ff",
+            "saffron-amber": "#E65100",
+            "on-tertiary": "#ffffff",
+            "tertiary-container": "#b83f00",
+            "on-secondary-fixed": "#002203",
+            "warm-parchment": "#FAFAF8",
+            "surface-tint": "#b22c01",
+            "on-surface": "#121c2a",
+            "inverse-primary": "#ffb5a1",
+            "primary": "#982400",
+            "inverse-surface": "#27313f",
+            "error": "#ba1a1a",
+            "surface-variant": "#d9e3f6",
+            "primary-fixed": "#ffdbd1",
+            "on-error-container": "#93000a",
+            "cardamom-soft": "#E8F5E9",
+            "on-background": "#121c2a",
+            "surface-bright": "#f8f9ff",
+            "charcoal-ink": "#1F2937",
+            "on-primary-container": "#ffe1da",
+            "turmeric-glow": "#FFF8E1"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "margin-desktop": "auto",
+            "space-sm": "0.5rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1.5rem",
+            "margin-tablet": "2rem",
+            "space-md": "1rem",
+            "margin": "1rem",
+            "space-xl": "2rem",
+            "gutter": "1rem",
+            "gutter-desktop": "1.5rem",
+            "space-2xl": "3rem"
+          },
+          "fontFamily": {
+            "body-md": ["Plus Jakarta Sans"],
+            "urdu-body": ["Noto Nastaliq Urdu", "Noto Sans Arabic", "serif"],
+            "headline-md": ["Playfair Display"],
+            "headline-lg": ["Playfair Display"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "label-lg": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "headline-sm": ["Playfair Display"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "urdu-title": ["Noto Nastaliq Urdu", "Noto Sans Arabic", "serif"],
+            "display-lg-mobile": ["Playfair Display"],
+            "display-lg": ["Playfair Display"],
+            "label-md": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "body-md": ["1rem", { "lineHeight": "1.5rem", "fontWeight": "400" }],
+            "urdu-body": ["0.9375rem", { "lineHeight": "1.75rem", "fontWeight": "400" }],
+            "headline-md": ["1.375rem", { "lineHeight": "1.75rem", "fontWeight": "600" }],
+            "headline-lg": ["1.75rem", { "lineHeight": "2.25rem", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-sm": ["0.875rem", { "lineHeight": "1.25rem", "fontWeight": "400" }],
+            "label-lg": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "body-lg": ["1.125rem", { "lineHeight": "1.75rem", "fontWeight": "400" }],
+            "headline-sm": ["1.125rem", { "lineHeight": "1.5rem", "fontWeight": "600" }],
+            "label-sm": ["0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.03em", "fontWeight": "600" }],
+            "urdu-title": ["1.125rem", { "lineHeight": "2rem", "fontWeight": "500" }],
+            "display-lg-mobile": ["1.875rem", { "lineHeight": "2.25rem", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "display-lg": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-md": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.02em", "fontWeight": "600" }]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    /* Custom subtle warm shadow for level 1 & 2 cards */
+    .warm-card-shadow {
+      box-shadow: 0 4px 20px -2px rgba(180, 83, 9, 0.08);
+    }
+    .warm-hero-shadow {
+      box-shadow: 0 10px 25px -4px rgba(191, 54, 12, 0.12), 0 4px 10px -2px rgba(0, 0, 0, 0.04);
+    }
+    /* Hide scrollbars for pleasant horizontal chip rows */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-warm-parchment text-charcoal-ink font-body-md text-body-md min-h-screen flex justify-center antialiased selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Mobile Viewport Container (Locked at 390px-480px width) -->
+<div class="w-full max-w-[420px] bg-warm-parchment min-h-screen flex flex-col relative shadow-sm">
+<!-- SHARED COMPONENT 1: TopAppBar -->
+<header class="bg-warm-parchment dark:bg-inverse-surface shadow-sm dark:shadow-none docked full-width top-0 sticky z-40">
+<div class="flex justify-between items-center w-full px-space-md py-space-sm max-w-lg mx-auto">
+<!-- Leading Icon -->
+<button aria-label="Menu" class="text-primary dark:text-primary-fixed-dim hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-150 active:scale-95 transition-transform duration-150 p-1 flex items-center justify-center" type="button">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<!-- Headline: Immutable string and casing from JSON -->
+<h1 class="font-headline-sm text-headline-sm md:font-headline-md md:text-headline-md font-bold text-primary dark:text-primary-fixed-dim tracking-tight">
+          آج کیا بناؤں؟
+        </h1>
+<!-- Trailing Icon -->
+<button aria-label="Profile Account" class="text-primary dark:text-primary-fixed-dim hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-150 active:scale-95 transition-transform duration-150 p-1 flex items-center justify-center" type="button">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas (with clearance for fixed bottom navigation) -->
+<main class="flex-1 px-space-md pt-space-sm pb-space-2xl flex flex-col gap-space-lg">
+<!-- 1. Header Section: Greeting Banner & Meal Toggle -->
+<section class="flex flex-col gap-space-md">
+<div class="flex justify-between items-start">
+<div class="space-y-0.5">
+<h2 class="font-headline-sm text-headline-sm font-bold text-charcoal-ink flex items-center gap-1.5">
+<span>Assalam-o-Alaikum, Ammi</span>
+<span class="text-terracotta-clay text-base">❤️</span>
+</h2>
+<p class="font-body-sm text-body-sm text-warm-gray">
+              Aaj kya bananay ka irada hai?
+            </p>
+</div>
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-terracotta-clay font-semibold bg-turmeric-glow px-2.5 py-1 rounded-full border border-border-subtle/50">
+<span class="material-symbols-outlined text-sm leading-none" data-icon="calendar_today">calendar_today</span>
+            Monday, 22 Sep
+          </span>
+</div>
+<!-- Meal Time Segmented Toggle -->
+<div class="grid grid-cols-2 p-1 bg-surface-pure rounded-xl border border-border-subtle shadow-sm">
+<!-- Lunch (Inactive) -->
+<button class="py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 text-warm-gray font-label-md text-label-md hover:text-charcoal-ink transition-colors" type="button">
+<span>☀️</span>
+<span>Dupahar / Lunch</span>
+</button>
+<!-- Dinner (Active: Saffron Amber Accent) -->
+<button class="py-2 px-3 rounded-lg bg-saffron-amber text-on-primary font-label-md text-label-md font-semibold flex items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-all" type="button">
+<span>🌙</span>
+<span>Raat / Dinner</span>
+</button>
+</div>
+</section>
+<!-- 2. Quick Mood Filter Chips (Horizontal Scrollable) -->
+<section class="w-full">
+<div class="flex items-center gap-space-sm overflow-x-auto no-scrollbar py-1 -mx-space-md px-space-md">
+<!-- Active Chip -->
+<button class="flex-shrink-0 px-3.5 py-2 rounded-full bg-saffron-amber text-on-primary font-label-md text-label-md font-semibold shadow-sm flex items-center gap-1.5 active:scale-95 transition-all" type="button">
+<span>✨</span>
+<span>Sab (All)</span>
+</button>
+<!-- Inactive Chips -->
+<button class="flex-shrink-0 px-3.5 py-2 rounded-full bg-surface-pure text-charcoal-ink border border-border-subtle font-label-md text-label-md hover:border-saffron-amber/40 active:scale-95 transition-all flex items-center gap-1.5" type="button">
+<span>🍗</span>
+<span>Gosht / Meat</span>
+</button>
+<button class="flex-shrink-0 px-3.5 py-2 rounded-full bg-surface-pure text-charcoal-ink border border-border-subtle font-label-md text-label-md hover:border-saffron-amber/40 active:scale-95 transition-all flex items-center gap-1.5" type="button">
+<span>🥣</span>
+<span>Daal</span>
+</button>
+<button class="flex-shrink-0 px-3.5 py-2 rounded-full bg-surface-pure text-charcoal-ink border border-border-subtle font-label-md text-label-md hover:border-saffron-amber/40 active:scale-95 transition-all flex items-center gap-1.5" type="button">
+<span>🥬</span>
+<span>Sabzi / Veg</span>
+</button>
+<button class="flex-shrink-0 px-3.5 py-2 rounded-full bg-surface-pure text-charcoal-ink border border-border-subtle font-label-md text-label-md hover:border-saffron-amber/40 active:scale-95 transition-all flex items-center gap-1.5" type="button">
+<span>🍚</span>
+<span>Chawal / Rice</span>
+</button>
+<button class="flex-shrink-0 px-3.5 py-2 rounded-full bg-surface-pure text-charcoal-ink border border-border-subtle font-label-md text-label-md hover:border-saffron-amber/40 active:scale-95 transition-all flex items-center gap-1.5" type="button">
+<span>⚡</span>
+<span>Jaldi (&lt;30 min)</span>
+</button>
+</div>
+</section>
+<!-- 3. Hero Recommendation Card (Tier 1: "Aaj Ka Best Mashwara") -->
+<section class="flex flex-col gap-2">
+<div class="flex items-center justify-between px-1">
+<span class="font-label-sm text-label-sm font-bold text-terracotta-clay uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-sm leading-none" data-icon="auto_awesome">auto_awesome</span>
+            Aaj Ka Best Mashwara
+          </span>
+<span class="font-label-sm text-label-sm text-warm-gray">Option 1 of 3</span>
+</div>
+<article class="bg-surface-pure rounded-xl border border-border-subtle overflow-hidden warm-hero-shadow transition-all">
+<!-- Food Image 4:3 with steam & fresh garnish aesthetic -->
+<div class="relative w-full aspect-[4/3] overflow-hidden bg-surface-dim">
+<img alt="Chicken Pulao" class="w-full h-full object-cover" data-alt="An appetizing and richly styled culinary photo of authentic Desi Chicken Pulao served in a traditional handcrafted terracotta handi bowl. Steaming long-grain basmati rice is glistening with caramelized golden onions, tender chicken pieces, aromatic cloves, cardamom pods, and freshly scattered coriander leaves. Warm hearth side-lighting emphasizes rich textures and terracotta tones under high culinary editorial magazine aesthetics with soft shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuASnVJgv-opLOFwOJbzvmeAvov4kcOFvq3ZBBvbtHwEeCaShvLmlPaIfHWGfbKvVYCFQfMVv_9eGSl7JKV3GDUoQeu7wr3vMXG6UScHRmU6TJfFV9TmZzhldTNf9sOPrX32VilODb94sqnuQaxmESek9yFI6bhW863St-MOfeyytrDj5N79Mcnb2d6LKfPdRpeQSJUI_qbd9E9rtLcCP2osRcmjU96KFx6Z1ajxDL97"/>
+<div class="absolute inset-0 bg-gradient-to-t from-charcoal-ink/60 via-transparent to-transparent"></div>
+<!-- Quick Tag overlay -->
+<div class="absolute bottom-3 left-3 right-3 flex flex-wrap gap-1.5">
+<span class="bg-saffron-amber text-on-primary font-label-sm text-label-sm font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="star">star</span>
+                Top Recommendation
+              </span>
+<span class="bg-turmeric-glow text-terracotta-clay font-label-sm text-label-sm font-semibold px-2 py-0.5 rounded-full shadow-sm border border-border-subtle/50 flex items-center gap-0.5">
+<span>❤️</span> Son's Favorite
+              </span>
+<span class="bg-surface-pure/95 text-charcoal-ink font-label-sm text-label-sm font-medium px-2 py-0.5 rounded-full shadow-sm">
+                🕒 6 Din Baad
+              </span>
+</div>
+</div>
+<!-- Card Body Details -->
+<div class="p-space-md flex flex-col gap-space-md">
+<!-- Bilingual Title Block -->
+<div class="space-y-0.5">
+<h3 class="font-headline-md text-headline-md font-bold text-charcoal-ink leading-snug">
+                Chicken Pulao
+              </h3>
+<p class="font-urdu-title text-urdu-title text-primary leading-tight">
+                (چکن پلاؤ)
+              </p>
+</div>
+<!-- "Mashwara Kyun?" (Why Today?) Warm Callout -->
+<div class="bg-turmeric-glow/80 border border-saffron-amber/30 rounded-lg p-3 flex items-start gap-2.5">
+<div class="w-8 h-8 rounded-full bg-saffron-amber/15 text-saffron-amber flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-base" data-icon="lightbulb">lightbulb</span>
+</div>
+<div class="flex-1 space-y-1">
+<p class="font-label-sm text-label-sm font-bold text-terracotta-clay">
+                  MASHWARA KYUN? (WHY TODAY?)
+                </p>
+<p class="font-body-sm text-body-sm text-charcoal-ink leading-relaxed">
+                  Aap ne 5 din se chawal nahi banaye. Provides good protein &amp; energy for dinner.
+                </p>
+</div>
+</div>
+<!-- Nutrition Glance Pill -->
+<div class="flex items-center justify-between py-2 px-3 bg-surface-bright rounded-lg border border-border-subtle/70 text-warm-gray">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-saffron-amber" data-icon="local_fire_department">local_fire_department</span>
+<span class="font-label-md text-label-md font-semibold text-charcoal-ink">~620 kcal</span>
+</div>
+<span class="text-border-subtle">•</span>
+<div class="font-label-md text-label-md">
+<strong class="text-charcoal-ink font-semibold">32g</strong> Protein
+              </div>
+<span class="text-border-subtle">•</span>
+<div class="font-label-md text-label-md">
+<strong class="text-charcoal-ink font-semibold">72g</strong> Carbs
+              </div>
+</div>
+<!-- Action Buttons Stack -->
+<div class="flex flex-col gap-2 pt-1">
+<!-- Primary CTA: Cook This -->
+<button class="w-full min-h-[52px] bg-saffron-amber hover:bg-terracotta-clay text-on-primary rounded-lg font-label-lg text-label-lg font-bold flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-all" onclick="toggleAccompanimentSheet()" type="button">
+<span class="material-symbols-outlined" data-icon="skillet">skillet</span>
+<span>🍳 Yeh Banao (Cook This)</span>
+</button>
+<!-- Secondary CTA: Not Today -->
+<button class="w-full min-h-[46px] bg-warm-parchment hover:bg-surface-pure text-charcoal-ink border border-border-subtle rounded-lg font-label-md text-label-md font-semibold flex items-center justify-center gap-2 active:scale-[0.98] transition-all" type="button">
+<span>🚫</span>
+<span>Aaj Nahi (Not Today)</span>
+</button>
+</div>
+</div>
+</article>
+</section>
+<!-- 4. "Surprise Me" Floating / Playful Quick Action -->
+<section>
+<button class="w-full py-3.5 px-4 bg-turmeric-glow hover:bg-amber-100/70 border-2 border-terracotta-clay/40 rounded-xl flex items-center justify-center gap-2.5 text-terracotta-clay font-label-lg text-label-lg font-bold shadow-sm active:scale-95 transition-all group" id="surpriseBtn" onclick="animateDice()" type="button">
+<span class="material-symbols-outlined text-2xl transition-transform duration-500" data-icon="casino" id="diceIcon">casino</span>
+<span>🎲 Aaj Kuch Acha Suggest Karein (Surprise Me!)</span>
+</button>
+</section>
+<!-- 5. Tier 2: "Dusray Achay Options (Alternatives)" -->
+<section class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between px-1">
+<h3 class="font-headline-sm text-headline-sm font-bold text-charcoal-ink flex items-center gap-1.5">
+<span>💡 Dusray Achay Options</span>
+</h3>
+<span class="font-label-sm text-label-sm text-warm-gray">2 Alternatives</span>
+</div>
+<div class="grid grid-cols-1 gap-2.5">
+<!-- Card A: Mutton Karahi -->
+<article class="bg-surface-pure p-3 rounded-xl border border-border-subtle warm-card-shadow flex items-center gap-3.5 active:bg-surface-bright transition-colors cursor-pointer">
+<div class="w-[72px] h-[72px] rounded-lg overflow-hidden flex-shrink-0 bg-surface-dim">
+<img alt="Mutton Karahi" class="w-full h-full object-cover" data-alt="Close up editorial magazine photograph of savory Pakistani Mutton Karahi cooked in an authentic cast-iron wok with fresh ginger juliennes, green chilies, rich reduced tomato gravy and tender mutton chops with warm amber hearth glow and dark slate background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCa_MZnYZp85S-koajX1_up9ySRb42HjgU2Z-sLjqpNYJircIvalQwesEadBkZZxXjZcX5DgHthQH87Q0lIAlzGx5z66bjRG4HCPCrmGxfuOqPPqtCTSimGZoEKYmIMWx7yhi0x00pwVCiKJ6dKiPHNpt5RnqRBk9IcJdMv0LIedIQtbpPt_7G-9bChhIqww2aYCZiTa0KW9m5h1QYbGUyjXwgwvL9AiRZFRBh7bZ_i"/>
+</div>
+<div class="flex-1 min-w-0 space-y-1">
+<div class="flex items-baseline justify-between gap-1">
+<h4 class="font-label-lg text-label-lg font-bold text-charcoal-ink truncate">
+                  Mutton Karahi <span class="font-urdu-title text-urdu-body text-primary font-normal">(مٹن کڑاہی)</span>
+</h4>
+</div>
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="inline-flex items-center gap-1 bg-cardamom-soft text-cardamom-emerald font-label-sm text-label-sm font-semibold px-2 py-0.5 rounded-full">
+                  High Iron &amp; Protein
+                </span>
+<span class="font-label-sm text-label-sm text-warm-gray">~490 kcal</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-warm-gray text-xl" data-icon="chevron_right">chevron_right</span>
+</article>
+<!-- Card B: Chana Dal -->
+<article class="bg-surface-pure p-3 rounded-xl border border-border-subtle warm-card-shadow flex items-center gap-3.5 active:bg-surface-bright transition-colors cursor-pointer">
+<div class="w-[72px] h-[72px] rounded-lg overflow-hidden flex-shrink-0 bg-surface-dim">
+<img alt="Chana Dal" class="w-full h-full object-cover" data-alt="Editorial Desi culinary photograph of tempered Chana Dal with a sizzling golden tarka of cumin seeds, dried red chilies, and fresh curry leaves poured into a white ceramic serving bowl on a warm parchment surface with herbal green garnishes." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJsvoc_I3JnePpQi4l0sciglm3SZqTp8WPXjAbKfLZ3_RHgqzggKbxenGdqdaNX67IBJXXbYYOWcuJt8fjI3O7oZmjnnp0p0o4RJ4JmNjsuv1P7Y7OSX8RmkD9_TEGjCZfqrJsr0PWKt42A91aIxsTlQbLEUb-B_PFshmQo-_gkdfXf7OStbPFOr_fQW2iB-eYvx97HD1qKdE_l8P99UCSgsmnrXhVNOZtAUhJTcCR"/>
+</div>
+<div class="flex-1 min-w-0 space-y-1">
+<div class="flex items-baseline justify-between gap-1">
+<h4 class="font-label-lg text-label-lg font-bold text-charcoal-ink truncate">
+                  Chana Dal <span class="font-urdu-title text-urdu-body text-primary font-normal">(چنا دال)</span>
+</h4>
+</div>
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="inline-flex items-center gap-1 bg-turmeric-glow text-saffron-amber font-label-sm text-label-sm font-semibold px-2 py-0.5 rounded-full border border-border-subtle/50">
+                  High Fiber Comfort
+                </span>
+<span class="font-label-sm text-label-sm text-warm-gray">~290 kcal</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-warm-gray text-xl" data-icon="chevron_right">chevron_right</span>
+</article>
+</div>
+</section>
+<!-- 6. Tier 3: "Aaj Rehnay Dein (Skip Today)" Accordion -->
+<section class="bg-surface-pure rounded-xl border border-border-subtle overflow-hidden">
+<details class="group">
+<summary class="flex justify-between items-center p-3.5 cursor-pointer list-none select-none text-charcoal-ink hover:bg-surface-bright">
+<div class="flex items-center gap-2">
+<span class="text-base">⏸️</span>
+<span class="font-label-md text-label-md font-bold text-charcoal-ink">
+                Aaj Inko Rehnay Dein (1 Dish Omitted)
+              </span>
+</div>
+<span class="material-symbols-outlined text-warm-gray transition-transform duration-200 group-open:rotate-180" data-icon="expand_more">expand_more</span>
+</summary>
+<div class="p-3.5 pt-1 border-t border-border-subtle/60 bg-warm-parchment/60 flex items-start gap-3 text-body-sm font-body-sm text-charcoal-ink">
+<div class="w-8 h-8 rounded-full bg-border-subtle/70 flex items-center justify-center flex-shrink-0 text-warm-gray mt-0.5">
+<span class="material-symbols-outlined text-base" data-icon="history_toggle_off">history_toggle_off</span>
+</div>
+<div class="space-y-1">
+<p class="font-label-sm text-label-sm font-bold text-charcoal-ink">
+                Aloo Anda (آلو انڈہ)
+              </p>
+<p class="text-warm-gray font-body-sm text-body-sm leading-relaxed">
+                Kal hi khaya tha, variety ke liye aaj kuch naya try karein taakay household monotony na ho.
+              </p>
+</div>
+</div>
+</details>
+</section>
+</main>
+<!-- Accompaniment Bottom Sheet Modal (Drawer) for "Yeh Banao" Trigger -->
+<div class="fixed inset-0 z-50 pointer-events-none opacity-0 transition-opacity duration-300" id="accompanimentSheet">
+<!-- Amber Tinted Scrim -->
+<div class="absolute inset-0 bg-[#1F2937]/50 backdrop-blur-xs" onclick="toggleAccompanimentSheet()"></div>
+<!-- Elevated Accompaniment Drawer -->
+<div class="absolute bottom-0 left-0 right-0 max-w-[420px] mx-auto bg-surface-pure rounded-t-2xl p-space-md shadow-2xl transform translate-y-full transition-transform duration-300 ease-out pointer-events-auto border-t border-border-subtle flex flex-col gap-space-md max-h-[751px] overflow-y-auto no-scrollbar">
+<!-- Grab Handle -->
+<div class="w-10 h-1 bg-border-subtle rounded-full mx-auto -mt-1 mb-1"></div>
+<!-- Header -->
+<div class="flex items-center justify-between">
+<div class="space-y-0.5">
+<h3 class="font-headline-sm text-headline-sm font-bold text-charcoal-ink">
+              Meal Pairing &amp; Sides
+            </h3>
+<p class="font-body-sm text-body-sm text-warm-gray">
+              Chicken Pulao (چکن پلاؤ) ke saath kya banayen?
+            </p>
+</div>
+<button class="p-1 rounded-full text-warm-gray hover:text-charcoal-ink" onclick="toggleAccompanimentSheet()" type="button">
+<span class="material-symbols-outlined text-xl" data-icon="close">close</span>
+</button>
+</div>
+<!-- Roti / Rice Accompaniment Stepper (Desi Controller) -->
+<div class="bg-warm-parchment p-3.5 rounded-xl border border-border-subtle space-y-2">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-bold text-charcoal-ink">
+              Roti / Phulka Quantity
+            </span>
+<span class="font-label-sm text-label-sm text-terracotta-clay font-semibold" id="rotiCalories">
+              +180 kcal • 36g carbs
+            </span>
+</div>
+<div class="flex items-center justify-between bg-surface-pure p-2 rounded-lg border border-border-subtle">
+<span class="font-body-sm text-body-sm text-warm-gray px-2">Total Phulkay</span>
+<div class="flex items-center gap-3">
+<button class="w-9 h-9 rounded-full bg-warm-parchment border border-border-subtle flex items-center justify-center font-bold text-charcoal-ink active:scale-90 transition-transform" onclick="changeRoti(-1)" type="button">
+                -
+              </button>
+<span class="font-label-lg text-label-lg font-bold text-charcoal-ink min-w-[20px] text-center" id="rotiCount">2</span>
+<button class="w-9 h-9 rounded-full bg-saffron-amber text-on-primary flex items-center justify-center font-bold active:scale-90 transition-transform shadow-sm" onclick="changeRoti(1)" type="button">
+                +
+              </button>
+</div>
+</div>
+</div>
+<!-- Meal Pairing Chips -->
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm font-bold text-warm-gray uppercase tracking-wider">
+            Saath Me Kya Shamil Karein?
+          </label>
+<div class="flex flex-col gap-2">
+<label class="flex items-center justify-between p-2.5 rounded-lg border border-border-subtle bg-surface-pure hover:bg-warm-parchment cursor-pointer">
+<div class="flex items-center gap-2">
+<span>🥗</span>
+<span class="font-label-md text-label-md font-medium text-charcoal-ink">Fresh Salad (Kheera &amp; Tamatar)</span>
+</div>
+<span class="font-label-sm text-label-sm text-cardamom-emerald bg-cardamom-soft px-2 py-0.5 rounded-full font-semibold">+25 kcal • Fiber</span>
+</label>
+<label class="flex items-center justify-between p-2.5 rounded-lg border border-border-subtle bg-surface-pure hover:bg-warm-parchment cursor-pointer">
+<div class="flex items-center gap-2">
+<span>🥒</span>
+<span class="font-label-md text-label-md font-medium text-charcoal-ink">Zeera Raita (Dahi)</span>
+</div>
+<span class="font-label-sm text-label-sm text-saffron-amber bg-turmeric-glow px-2 py-0.5 rounded-full font-semibold">+45 kcal • Calcium</span>
+</label>
+</div>
+</div>
+<!-- Evening / Night Desi Compensation -->
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm font-bold text-warm-gray uppercase tracking-wider">
+            Raat Ko / Baad Me (Desi Healthy Touch)
+          </label>
+<div class="flex items-center gap-2">
+<span class="flex-1 p-2 rounded-lg bg-turmeric-glow/60 border border-saffron-amber/30 font-label-sm text-label-sm text-terracotta-clay font-medium flex items-center gap-1.5">
+<span>🥜</span> 5-6 Badam Raat Ko (+50 kcal)
+            </span>
+<span class="flex-1 p-2 rounded-lg bg-surface-bright border border-border-subtle font-label-sm text-label-sm text-charcoal-ink font-medium flex items-center gap-1.5">
+<span>🥛</span> Garam Doodh
+            </span>
+</div>
+</div>
+<!-- Confirmation CTA -->
+<button class="w-full min-h-[50px] bg-cardamom-emerald text-on-secondary rounded-lg font-label-lg text-label-lg font-bold flex items-center justify-center gap-2 shadow-md active:scale-95 transition-all mt-1" onclick="toggleAccompanimentSheet()" type="button">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+<span>Khana Final Karein (Log Dinner)</span>
+</button>
+</div>
+</div>
+<!-- SHARED COMPONENT 2: BottomNavBar -->
+<!-- Screen intent is Home Recommendation Deck, so "Aaj Kya Banaun" (index 0) is active -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-space-md py-space-xs max-w-lg mx-auto bg-surface-pure dark:bg-inverse-surface shadow-lg dark:shadow-none docked full-width bottom-0 rounded-t-xl">
+<!-- Item 0: Aaj Kya Banaun (Active) -->
+<a class="flex flex-col items-center justify-center bg-primary-fixed dark:bg-primary-container text-on-primary-fixed dark:text-on-primary-container rounded-lg px-space-md py-space-xs font-semibold active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="dinner_dining">dinner_dining</span>
+<span class="font-label-sm text-label-sm md:font-label-md md:text-label-md">آج کیا بناؤں</span>
+</a>
+<!-- Item 1: Tareekh (Inactive) -->
+<a class="flex flex-col items-center justify-center text-charcoal-ink dark:text-surface-container-highest px-space-sm py-space-xs hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-150 active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="calendar_month">calendar_month</span>
+<span class="font-label-sm text-label-sm md:font-label-md md:text-label-md">تاریخ</span>
+</a>
+<!-- Item 2: Pasand (Inactive) -->
+<a class="flex flex-col items-center justify-center text-charcoal-ink dark:text-surface-container-highest px-space-sm py-space-xs hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-150 active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="favorite">favorite</span>
+<span class="font-label-sm text-label-sm md:font-label-md md:text-label-md">پسند</span>
+</a>
+<!-- Item 3: Tarteebat / Settings (Inactive) -->
+<a class="flex flex-col items-center justify-center text-charcoal-ink dark:text-surface-container-highest px-space-sm py-space-xs hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-150 active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="settings">settings</span>
+<span class="font-label-sm text-label-sm md:font-label-md md:text-label-md">ترتیبات</span>
+</a>
+</nav>
+</div>
+<!-- Interactive JavaScript for micro-interactions & Stepper -->
+<script>
+    // Bottom Sheet Accompaniment drawer toggle
+    function toggleAccompanimentSheet() {
+      const sheet = document.getElementById('accompanimentSheet');
+      const drawer = sheet.querySelector('div:last-child');
+      
+      if (sheet.classList.contains('opacity-0')) {
+        sheet.classList.remove('opacity-0', 'pointer-events-none');
+        drawer.classList.remove('translate-y-full');
+      } else {
+        drawer.classList.add('translate-y-full');
+        sheet.classList.add('opacity-0', 'pointer-events-none');
+      }
+    }
+
+    // Playful Dice Shuffle Animation for "Surprise Me"
+    function animateDice() {
+      const icon = document.getElementById('diceIcon');
+      icon.classList.add('rotate-180', 'scale-125');
+      setTimeout(() => {
+        icon.classList.remove('rotate-180', 'scale-125');
+      }, 500);
+    }
+
+    // Dynamic Roti Stepper controller
+    let rotiCount = 2;
+    function changeRoti(delta) {
+      rotiCount = Math.max(0, rotiCount + delta);
+      document.getElementById('rotiCount').innerText = rotiCount;
+      const cal = rotiCount * 90;
+      const carb = rotiCount * 18;
+      document.getElementById('rotiCalories').innerText = `+${cal} kcal • ${carb}g carbs`;
+    }
+  </script>
+</body></html>

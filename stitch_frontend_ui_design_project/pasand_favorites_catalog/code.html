@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pasand &amp; Khana Directory - Aaj Kya Banaun?</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;700&amp;family=Playfair+Display:ital,wght@0,600;0,700;1,600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-highest": "#d9e3f6",
+            "secondary": "#2a6b2c",
+            "on-secondary": "#ffffff",
+            "secondary-fixed-dim": "#91d78a",
+            "on-tertiary-container": "#ffe1d8",
+            "on-primary-fixed-variant": "#881f00",
+            "on-secondary-fixed-variant": "#0c5216",
+            "inverse-on-surface": "#eaf1ff",
+            "primary-fixed-dim": "#ffb5a1",
+            "on-primary-fixed": "#3b0800",
+            "secondary-fixed": "#acf4a4",
+            "surface-dim": "#d0dbed",
+            "surface-container-lowest": "#ffffff",
+            "on-surface-variant": "#5a413a",
+            "tertiary": "#8f2f00",
+            "border-subtle": "#E5E1DA",
+            "on-primary": "#ffffff",
+            "surface-container": "#e6eeff",
+            "surface": "#f8f9ff",
+            "tertiary-fixed-dim": "#ffb59a",
+            "surface-container-high": "#dee9fc",
+            "warm-gray": "#6B7280",
+            "on-error": "#ffffff",
+            "surface-pure": "#FFFFFF",
+            "terracotta-clay": "#BF360C",
+            "on-tertiary-fixed-variant": "#802a00",
+            "background": "#FAFAF8",
+            "error-container": "#ffdad6",
+            "tertiary-fixed": "#ffdbcf",
+            "outline-variant": "#e2bfb6",
+            "secondary-container": "#acf4a4",
+            "on-secondary-container": "#307231",
+            "cardamom-emerald": "#1B5E20",
+            "primary-container": "#bf360c",
+            "on-tertiary-fixed": "#380d00",
+            "outline": "#8e7069",
+            "surface-container-low": "#eff4ff",
+            "saffron-amber": "#E65100",
+            "on-tertiary": "#ffffff",
+            "tertiary-container": "#b83f00",
+            "on-secondary-fixed": "#002203",
+            "warm-parchment": "#FAFAF8",
+            "surface-tint": "#b22c01",
+            "on-surface": "#121c2a",
+            "inverse-primary": "#ffb5a1",
+            "primary": "#982400",
+            "inverse-surface": "#27313f",
+            "error": "#ba1a1a",
+            "surface-variant": "#d9e3f6",
+            "primary-fixed": "#ffdbd1",
+            "on-error-container": "#93000a",
+            "cardamom-soft": "#E8F5E9",
+            "on-background": "#121c2a",
+            "surface-bright": "#f8f9ff",
+            "charcoal-ink": "#1F2937",
+            "on-primary-container": "#ffe1da",
+            "turmeric-glow": "#FFF8E1"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "margin-desktop": "auto",
+            "space-sm": "0.5rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1.5rem",
+            "margin-tablet": "2rem",
+            "space-md": "1rem",
+            "margin": "1rem",
+            "space-xl": "2rem",
+            "gutter": "1rem",
+            "gutter-desktop": "1.5rem",
+            "space-2xl": "3rem"
+          },
+          "fontFamily": {
+            "body-md": ["Plus Jakarta Sans"],
+            "urdu-body": ["Noto Nastaliq Urdu", "Noto Sans Arabic", "serif"],
+            "headline-md": ["Playfair Display"],
+            "headline-lg": ["Playfair Display"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "label-lg": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "headline-sm": ["Playfair Display"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "urdu-title": ["Noto Nastaliq Urdu", "Noto Sans Arabic", "serif"],
+            "display-lg-mobile": ["Playfair Display"],
+            "display-lg": ["Playfair Display"],
+            "label-md": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "body-md": ["1rem", { "lineHeight": "1.5rem", "fontWeight": "400" }],
+            "urdu-body": ["0.9375rem", { "lineHeight": "1.75rem", "fontWeight": "400" }],
+            "headline-md": ["1.375rem", { "lineHeight": "1.75rem", "fontWeight": "600" }],
+            "headline-lg": ["1.75rem", { "lineHeight": "2.25rem", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-sm": ["0.875rem", { "lineHeight": "1.25rem", "fontWeight": "400" }],
+            "label-lg": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "body-lg": ["1.125rem", { "lineHeight": "1.75rem", "fontWeight": "400" }],
+            "headline-sm": ["1.125rem", { "lineHeight": "1.5rem", "fontWeight": "600" }],
+            "label-sm": ["0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.03em", "fontWeight": "600" }],
+            "urdu-title": ["1.125rem", { "lineHeight": "2rem", "fontWeight": "500" }],
+            "display-lg-mobile": ["1.875rem", { "lineHeight": "2.25rem", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "display-lg": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-md": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.02em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .urdu-font {
+      font-family: 'Noto Nastaliq Urdu', 'Noto Sans Arabic', serif;
+      direction: rtl;
+    }
+    .warm-card-shadow {
+      box-shadow: 0 4px 20px -2px rgba(180, 83, 9, 0.08);
+    }
+    .badge-pop {
+      box-shadow: 0 2px 8px -1px rgba(191, 54, 12, 0.15);
+    }
+    /* Hide scrollbar for category row */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-warm-parchment text-charcoal-ink font-body-md antialiased min-h-screen flex justify-center pb-24 selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Mobile Shell Viewport Container (Max 430px) -->
+<main class="w-full max-w-[430px] min-h-screen bg-warm-parchment flex flex-col relative px-space-md">
+<!-- Top Navigation Anchor (Shared Component: TopAppBar mapped) -->
+<header class="sticky top-0 z-40 bg-warm-parchment pt-space-md pb-space-sm">
+<div class="flex justify-between items-center w-full">
+<button aria-label="Menu" class="w-10 h-10 rounded-full flex items-center justify-center text-charcoal-ink hover:text-primary active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-[24px]">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight text-center">
+          آج کیا بناؤں؟
+        </h1>
+<button aria-label="Profile" class="w-10 h-10 rounded-full flex items-center justify-center text-charcoal-ink hover:text-primary active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-[26px]">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Screen Header Section -->
+<section class="mt-space-sm mb-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-sm text-headline-sm font-bold text-charcoal-ink">
+            Pasand &amp; Khana Directory
+          </h2>
+<span class="urdu-font text-terracotta-clay font-urdu-title text-[1rem] leading-none">
+            پسندیدہ کھانے
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-warm-gray">
+          Manage family favorites, likes, and meal frequency
+        </p>
+</div>
+</section>
+<!-- Search & Filters Container -->
+<section class="flex flex-col gap-space-sm mb-space-lg">
+<!-- Search Input -->
+<div class="relative w-full">
+<div class="absolute inset-y-0 left-0 pl-space-md flex items-center pointer-events-none text-warm-gray">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full h-12 pl-11 pr-space-md bg-surface-pure border border-border-subtle rounded-xl font-body-sm text-body-sm text-charcoal-ink placeholder-warm-gray focus:outline-none focus:border-terracotta-clay focus:ring-2 focus:ring-terracotta-clay/15 transition duration-150 shadow-sm" placeholder="Search any dish (e.g. Biryani, Daal, Bhindi)..." type="search"/>
+<div class="absolute inset-y-0 right-0 pr-space-sm flex items-center">
+<span class="text-[10px] font-label-sm font-semibold bg-turmeric-glow text-terracotta-clay px-space-xs py-0.5 rounded border border-terracotta-clay/20">
+            42 DISHES
+          </span>
+</div>
+</div>
+<!-- Category Filter Pills (Horizontal Scrollable) -->
+<div class="flex items-center gap-space-xs overflow-x-auto no-scrollbar py-1 -mx-space-md px-space-md">
+<!-- Sab (All) Active -->
+<button class="whitespace-nowrap px-space-md py-2 rounded-full font-label-md text-label-md bg-terracotta-clay text-on-primary font-semibold shadow-sm active:scale-95 transition duration-150 flex items-center gap-1" type="button">
+<span>Sab (All)</span>
+<span class="w-1.5 h-1.5 rounded-full bg-white ml-0.5"></span>
+</button>
+<!-- Chawal -->
+<button class="whitespace-nowrap px-space-md py-2 rounded-full font-label-md text-label-md bg-surface-pure text-charcoal-ink border border-border-subtle hover:text-primary active:scale-95 transition duration-150 flex items-center gap-1.5" type="button">
+<span>Chawal</span>
+<span>🍚</span>
+</button>
+<!-- Karahi & Gosht -->
+<button class="whitespace-nowrap px-space-md py-2 rounded-full font-label-md text-label-md bg-surface-pure text-charcoal-ink border border-border-subtle hover:text-primary active:scale-95 transition duration-150 flex items-center gap-1.5" type="button">
+<span>Karahi &amp; Gosht</span>
+<span>🍗</span>
+</button>
+<!-- Daal -->
+<button class="whitespace-nowrap px-space-md py-2 rounded-full font-label-md text-label-md bg-surface-pure text-charcoal-ink border border-border-subtle hover:text-primary active:scale-95 transition duration-150 flex items-center gap-1.5" type="button">
+<span>Daal</span>
+<span>🥣</span>
+</button>
+<!-- Sabzi -->
+<button class="whitespace-nowrap px-space-md py-2 rounded-full font-label-md text-label-md bg-surface-pure text-charcoal-ink border border-border-subtle hover:text-primary active:scale-95 transition duration-150 flex items-center gap-1.5" type="button">
+<span>Sabzi</span>
+<span>🥬</span>
+</button>
+<!-- Sides & Snacks -->
+<button class="whitespace-nowrap px-space-md py-2 rounded-full font-label-md text-label-md bg-surface-pure text-charcoal-ink border border-border-subtle hover:text-primary active:scale-95 transition duration-150 flex items-center gap-1.5" type="button">
+<span>Sides &amp; Snacks</span>
+<span>🥗</span>
+</button>
+</div>
+</section>
+<!-- Food Catalog Bento & Asymmetric Cards Feed -->
+<section class="flex flex-col gap-space-md">
+<!-- Card 1: Chicken Biryani (چکن بریانی) - Hero Featured Style -->
+<article class="bg-surface-pure border border-border-subtle rounded-xl p-space-md warm-card-shadow flex flex-col gap-space-md relative overflow-hidden">
+<div class="absolute -right-4 -top-4 w-16 h-16 bg-turmeric-glow rounded-full opacity-60 pointer-events-none"></div>
+<div class="flex gap-space-md items-start">
+<div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 border border-border-subtle relative">
+<img class="w-full h-full object-cover" data-alt="Appetizing traditional Pakistani chicken biryani served in an artisanal terracotta handi garnished with fragrant mint leaves, golden fried onions, and whole star anise spices. The food photography is warm, editorial and high-contrast with soft natural sidelight accentuating amber and saffron grains against warm parchment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGdTyVd3s4aNtjM-24SyV0RMXQct7fBZmTOB4x73tgcWr23QtS6CjzIXoJJYStGIBjlYDcvo5a9NIhH68ZzbaD35fc2shxqxU0STK7aaoN5ag6Sp4oWsiohFeN2o2O3VSVSroTPoYtCSjcXPFcra1yFDplbaB29I1gnlFJx8sg-gby2MCX0NCafBEiajeusCXgGEv3qG2IaKvKulRKwnHlp8kSdxTdMzCinG6y46jM"/>
+<span class="absolute bottom-1 right-1 bg-charcoal-ink/80 text-white font-label-sm text-[10px] px-1 rounded">
+              Desi Hero
+            </span>
+</div>
+<div class="flex-1 min-w-0 flex flex-col justify-between h-24">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="font-headline-sm text-headline-sm font-bold text-charcoal-ink truncate leading-tight">
+                  Chicken Biryani
+                </h3>
+</div>
+<p class="urdu-font text-terracotta-clay font-urdu-title text-base leading-6 mt-0.5">
+                چکن بریانی
+              </p>
+</div>
+<!-- Nutrient Macro Tags -->
+<div class="flex flex-wrap gap-1 items-center mt-1">
+<span class="bg-turmeric-glow text-terracotta-clay font-label-sm text-[10px] px-1.5 py-0.5 rounded font-semibold border border-terracotta-clay/20">
+                High Protein
+              </span>
+<span class="bg-warm-parchment text-charcoal-ink font-label-sm text-[10px] px-1.5 py-0.5 rounded border border-border-subtle">
+                Rice
+              </span>
+<span class="text-warm-gray font-label-sm text-[10px]">
+                ~650 kcal
+              </span>
+</div>
+</div>
+</div>
+<!-- Preference Actions Bar -->
+<div class="pt-space-xs border-t border-border-subtle/80 flex items-center justify-between gap-1">
+<!-- Favorite button (Active State) -->
+<button class="flex-1 h-10 px-2 rounded-lg bg-primary-fixed text-terracotta-clay font-label-sm text-xs font-bold flex items-center justify-center gap-1 active:scale-95 transition duration-150" type="button">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span>Starred</span>
+</button>
+<!-- Like button -->
+<button class="h-10 px-3 rounded-lg bg-warm-parchment border border-border-subtle text-charcoal-ink font-label-sm text-xs flex items-center justify-center gap-1 hover:bg-surface-container active:scale-95 transition duration-150" type="button">
+<span class="material-symbols-outlined text-[18px]">thumb_up</span>
+<span class="text-[10px] font-bold text-cardamom-emerald">+5</span>
+</button>
+<!-- Dislike button -->
+<button class="h-10 px-3 rounded-lg bg-warm-parchment border border-border-subtle text-warm-gray font-label-sm text-xs flex items-center justify-center gap-1 hover:text-charcoal-ink active:scale-95 transition duration-150" type="button">
+<span class="material-symbols-outlined text-[18px]">thumb_down</span>
+</button>
+<!-- Aaj Nahi Mute Button -->
+<button class="h-10 px-2.5 rounded-lg bg-warm-parchment border border-border-subtle text-warm-gray hover:text-terracotta-clay font-label-sm text-[11px] flex items-center justify-center gap-1 active:scale-95 transition duration-150" title="Aaj nahi (24h mute)" type="button">
+<span class="material-symbols-outlined text-[16px]">block</span>
+<span class="hidden xs:inline">24h</span>
+</button>
+</div>
+</article>
+<!-- Card 2: Mutton Kaleji / Liver (مٹن کلیجی) -->
+<article class="bg-surface-pure border border-border-subtle rounded-xl p-space-md warm-card-shadow flex flex-col gap-space-sm">
+<div class="flex gap-space-md items-start">
+<div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 border border-border-subtle">
+<img class="w-full h-full object-cover" data-alt="Traditional spicy Mutton Kaleji fry liver curry cooked in a cast iron karahi pan with green chili strips, ginger juliennes and crushed coriander seeds. Rich deep reddish terracotta gravy in warm culinary studio atmosphere with soft lighting and earth-toned ceramic bowls." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSGDNekd0c0iiceA6GRd52Crjd7bnOyga1hccNzA_g0myrW8UgZm5KER4dOzZLK6Wf4Yy79T6CocAXYcw_MUvBu1s6cp7aKJaPaMXNBsFLnQtv1msfBSMN2Y710JQRrXlEeh5afHoK4e9jr-9IRGp1EcVDOg72xqgXvuImR1gSadSl8zWcEohFs0LwN-rGhnsujCOB2b1LAibLpcJWPw4jnZ1iwcyFXLjVk0woU1ca"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-[1.05rem] font-bold text-charcoal-ink leading-tight">
+                  Mutton Kaleji (Liver)
+                </h3>
+<p class="urdu-font text-terracotta-clay font-urdu-title text-base leading-5 mt-0.5">
+                  مٹن کلیجی
+                </p>
+</div>
+<!-- Rating / Favorite toggle -->
+<button class="text-warm-gray hover:text-terracotta-clay transition-colors p-1" type="button">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+</div>
+<!-- Nutrient & Health Callout -->
+<div class="flex flex-wrap gap-1 items-center mt-2">
+<span class="bg-cardamom-soft text-cardamom-emerald font-label-sm text-[10px] px-1.5 py-0.5 rounded font-semibold">
+                Super High Iron (12.5mg)
+              </span>
+<span class="text-warm-gray font-label-sm text-[10px]">
+                ~340 kcal
+              </span>
+</div>
+</div>
+</div>
+<div class="pt-space-xs border-t border-border-subtle flex items-center justify-between text-warm-gray font-label-sm text-xs">
+<div class="flex items-center gap-1 text-saffron-amber">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-bold text-charcoal-ink">4.2</span>
+<span class="text-warm-gray text-[11px]">(Family Rating)</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-warm-gray hover:text-cardamom-emerald flex items-center gap-0.5 text-[11px] px-2 py-1 rounded hover:bg-warm-parchment" type="button">
+<span class="material-symbols-outlined text-[16px]">thumb_up</span> Like
+            </button>
+<button class="text-warm-gray hover:text-error flex items-center gap-0.5 text-[11px] px-2 py-1 rounded hover:bg-warm-parchment" type="button">
+<span class="material-symbols-outlined text-[16px]">block</span> Mute
+            </button>
+</div>
+</div>
+</article>
+<!-- Card 3: Chana Dal (چنا دال) -->
+<article class="bg-surface-pure border border-border-subtle rounded-xl p-space-md warm-card-shadow flex flex-col gap-space-sm">
+<div class="flex gap-space-md items-start">
+<div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 border border-border-subtle">
+<img class="w-full h-full object-cover" data-alt="Golden authentic Lahori Chana Dal with fragrant cumin and red Kashmiri chili tadka floating on top in a shallow glazed earthenware bowl. Steaming hot yellow lentil texture photographed in soft natural ambient light of a rustic Pakistani home kitchen." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjHDVWR55J921Lq0obrEdHmJIVMxG2UtBzP9N-byzGwYddjj_PEMbKQRsm8ox-L3GX-llg5NXD_hDQAI8bZossivKtvRG9qyXVgTXRVG_tRC2K5Yh9S1uJDduBzD4etqN5f59sQS7bGWmMmZj25dV3KER6CjPkRyWx-GrdfGZfYaWAX2BqxeGedB3SK4rAu5oRiipg7Fjx13kitF4y_X3kcEHAV7jdp8u3ZdxOFa44"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-[1.05rem] font-bold text-charcoal-ink leading-tight">
+                  Chana Dal
+                </h3>
+<p class="urdu-font text-terracotta-clay font-urdu-title text-base leading-5 mt-0.5">
+                  چنا دال
+                </p>
+</div>
+<!-- Liked Badge Indicator -->
+<span class="flex items-center gap-1 bg-cardamom-soft text-cardamom-emerald px-2 py-0.5 rounded-full font-label-sm text-[10px] font-bold">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">thumb_up</span>
+                Liked
+              </span>
+</div>
+<div class="flex flex-wrap gap-1 items-center mt-2">
+<span class="bg-cardamom-soft text-cardamom-emerald font-label-sm text-[10px] px-1.5 py-0.5 rounded font-semibold">
+                Fiber Rich (8g)
+              </span>
+<span class="text-warm-gray font-label-sm text-[10px]">
+                ~290 kcal
+              </span>
+</div>
+</div>
+</div>
+<div class="pt-space-xs border-t border-border-subtle flex items-center justify-between">
+<span class="text-warm-gray font-body-sm text-xs">
+            Cooked 3 days ago
+          </span>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 rounded-full flex items-center justify-center text-warm-gray hover:text-terracotta-clay hover:bg-warm-parchment" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center text-warm-gray hover:text-charcoal-ink hover:bg-warm-parchment" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 4: Bhindi Masala (بھنڈی مصالحہ) -->
+<article class="bg-surface-pure border border-border-subtle rounded-xl p-space-md warm-card-shadow flex flex-col gap-space-sm">
+<div class="flex gap-space-md items-start">
+<div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 border border-border-subtle">
+<img class="w-full h-full object-cover" data-alt="Pan-fried spicy Bhindi Masala okra sautéed with crispy sliced onions, tomatoes, and dry roasted spices in a polished brass cooking pan. Lush green okra pieces glistening lightly with olive oil under soft kitchen daylight on warm linen fabric background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPuLnd-Uqbgyuu_DSS4kYnO7ex9UMcQWIm56mDIInmAZH3FpFV1Py7Ns6m7kG05jQ2SUxeWTOtc19kf-yOdcMPV_ozEj1m7IW83AzhS4ydnx4PAOOzBtXUtwmz3LS1aYU8jIx5l0FydtkcbFpxTMH9JCiSH9w1wzKB1U5BUAAV4-hgFY3brTkbVGqSS95pVD64wG6JOTxQHXzY_sUJDlatXmTcwycYMxi1PZjmawTB"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-[1.05rem] font-bold text-charcoal-ink leading-tight">
+                  Bhindi Masala
+                </h3>
+<p class="urdu-font text-terracotta-clay font-urdu-title text-base leading-5 mt-0.5">
+                  بھنڈی مصالحہ
+                </p>
+</div>
+<!-- Neutral status pill -->
+<span class="bg-warm-parchment border border-border-subtle text-warm-gray px-2 py-0.5 rounded-full font-label-sm text-[10px]">
+                Neutral
+              </span>
+</div>
+<div class="flex flex-wrap gap-1 items-center mt-2">
+<span class="bg-warm-parchment text-charcoal-ink font-label-sm text-[10px] px-1.5 py-0.5 rounded border border-border-subtle">
+                Light &amp; Easy
+              </span>
+<span class="text-warm-gray font-label-sm text-[10px]">
+                ~210 kcal
+              </span>
+</div>
+</div>
+</div>
+<div class="pt-space-xs border-t border-border-subtle flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<button class="text-warm-gray hover:text-terracotta-clay p-1 rounded hover:bg-warm-parchment flex items-center gap-1 text-[11px] font-label-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">favorite</span> Star
+            </button>
+<button class="text-warm-gray hover:text-cardamom-emerald p-1 rounded hover:bg-warm-parchment flex items-center gap-1 text-[11px] font-label-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">thumb_up</span> Like
+            </button>
+</div>
+<button class="text-warm-gray hover:text-error text-[11px] font-label-sm flex items-center gap-0.5" type="button">
+<span class="material-symbols-outlined text-[16px]">thumb_down</span> Dislike
+          </button>
+</div>
+</article>
+</section>
+<!-- Quick Stats Footer / Gentle Tip Callout -->
+<section class="mt-space-lg mb-space-md">
+<div class="bg-turmeric-glow/70 border border-terracotta-clay/20 rounded-xl p-space-md flex items-start gap-space-sm">
+<div class="w-7 h-7 rounded-full bg-turmeric-glow flex items-center justify-center flex-shrink-0 border border-terracotta-clay/30 text-terracotta-clay">
+<span class="material-symbols-outlined text-[18px]">lightbulb</span>
+</div>
+<div class="flex flex-col gap-0.5">
+<p class="font-label-lg text-xs font-bold text-terracotta-clay">
+            Recommendation Logic
+          </p>
+<p class="font-body-sm text-body-sm text-charcoal-ink leading-relaxed">
+            Favorites get <span class="font-bold text-terracotta-clay">+15 bonus points</span> in daily recommendations. Disliked items are automatically deprioritized.
+          </p>
+</div>
+</div>
+</section>
+<!-- Bottom Navigation Bar (Shared Component: BottomNavBar exact recreation with Active 'Pasand') -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-space-md py-space-xs max-w-lg mx-auto bg-surface-pure shadow-lg rounded-t-xl">
+<!-- Tab 1: Aaj Kya Banaun (Inactive) -->
+<a class="flex flex-col items-center justify-center text-charcoal-ink px-space-sm py-space-xs hover:text-primary transition-colors duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[24px]">dinner_dining</span>
+<span class="font-label-sm text-label-sm mt-0.5">آج کیا بناؤں</span>
+</a>
+<!-- Tab 2: Tareekh (Inactive) -->
+<a class="flex flex-col items-center justify-center text-charcoal-ink px-space-sm py-space-xs hover:text-primary transition-colors duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[24px]">calendar_month</span>
+<span class="font-label-sm text-label-sm mt-0.5">تاریخ</span>
+</a>
+<!-- Tab 3: Pasand (ACTIVE HIGHLIGHT) -->
+<a class="flex flex-col items-center justify-center bg-primary-fixed text-on-primary-fixed rounded-lg px-space-md py-space-xs font-semibold active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="font-label-sm text-label-sm mt-0.5 font-bold">پسند</span>
+</a>
+<!-- Tab 4: Tarteebat / Settings (Inactive) -->
+<a class="flex flex-col items-center justify-center text-charcoal-ink px-space-sm py-space-xs hover:text-primary transition-colors duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[24px]">settings</span>
+<span class="font-label-sm text-label-sm mt-0.5">ترتیبات</span>
+</a>
+</nav>
+</main>
+<script>
+    // Lightweight interactive feedback for kitchen ergonomics
+    document.addEventListener('DOMContentLoaded', () => {
+      // Toggle favorites dynamically
+      const favButtons = document.querySelectorAll('button:has(.material-symbols-outlined)');
+      favButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const icon = btn.querySelector('.material-symbols-outlined');
+          if (icon && (icon.textContent === 'favorite' || icon.textContent === 'thumb_up')) {
+            // Visual subtle pulse
+            btn.classList.add('scale-105');
+            setTimeout(() => btn.classList.remove('scale-105'), 150);
+          }
+        });
+      });
+    });
+  </script>
+</body></html>

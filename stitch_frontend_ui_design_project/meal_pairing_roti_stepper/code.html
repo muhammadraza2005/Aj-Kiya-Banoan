@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Aaj Kya Banaun? - Meal Pairing &amp; Roti Accompaniment</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;700&amp;family=Playfair+Display:ital,wght@0,600;0,700;1,600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-highest": "#d9e3f6",
+            "secondary": "#2a6b2c",
+            "on-secondary": "#ffffff",
+            "secondary-fixed-dim": "#91d78a",
+            "on-tertiary-container": "#ffe1d8",
+            "on-primary-fixed-variant": "#881f00",
+            "on-secondary-fixed-variant": "#0c5216",
+            "inverse-on-surface": "#eaf1ff",
+            "primary-fixed-dim": "#ffb5a1",
+            "on-primary-fixed": "#3b0800",
+            "secondary-fixed": "#acf4a4",
+            "surface-dim": "#d0dbed",
+            "surface-container-lowest": "#ffffff",
+            "on-surface-variant": "#5a413a",
+            "tertiary": "#8f2f00",
+            "border-subtle": "#E5E1DA",
+            "on-primary": "#ffffff",
+            "surface-container": "#e6eeff",
+            "surface": "#f8f9ff",
+            "tertiary-fixed-dim": "#ffb59a",
+            "surface-container-high": "#dee9fc",
+            "warm-gray": "#6B7280",
+            "on-error": "#ffffff",
+            "surface-pure": "#FFFFFF",
+            "terracotta-clay": "#BF360C",
+            "on-tertiary-fixed-variant": "#802a00",
+            "background": "#f8f9ff",
+            "error-container": "#ffdad6",
+            "tertiary-fixed": "#ffdbcf",
+            "outline-variant": "#e2bfb6",
+            "secondary-container": "#acf4a4",
+            "on-secondary-container": "#307231",
+            "cardamom-emerald": "#1B5E20",
+            "primary-container": "#bf360c",
+            "on-tertiary-fixed": "#380d00",
+            "outline": "#8e7069",
+            "surface-container-low": "#eff4ff",
+            "saffron-amber": "#E65100",
+            "on-tertiary": "#ffffff",
+            "tertiary-container": "#b83f00",
+            "on-secondary-fixed": "#002203",
+            "warm-parchment": "#FAFAF8",
+            "surface-tint": "#b22c01",
+            "on-surface": "#121c2a",
+            "inverse-primary": "#ffb5a1",
+            "primary": "#982400",
+            "inverse-surface": "#27313f",
+            "error": "#ba1a1a",
+            "surface-variant": "#d9e3f6",
+            "primary-fixed": "#ffdbd1",
+            "on-error-container": "#93000a",
+            "cardamom-soft": "#E8F5E9",
+            "on-background": "#121c2a",
+            "surface-bright": "#f8f9ff",
+            "charcoal-ink": "#1F2937",
+            "on-primary-container": "#ffe1da",
+            "turmeric-glow": "#FFF8E1"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "margin-desktop": "auto",
+            "space-sm": "0.5rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1.5rem",
+            "margin-tablet": "2rem",
+            "space-md": "1rem",
+            "margin": "1rem",
+            "space-xl": "2rem",
+            "gutter": "1rem",
+            "gutter-desktop": "1.5rem",
+            "space-2xl": "3rem"
+          },
+          "fontFamily": {
+            "body-md": ["Plus Jakarta Sans"],
+            "urdu-body": ["Noto Nastaliq Urdu", "Noto Sans Arabic", "serif"],
+            "headline-md": ["Playfair Display"],
+            "headline-lg": ["Playfair Display"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "label-lg": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "headline-sm": ["Playfair Display"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "urdu-title": ["Noto Nastaliq Urdu", "Noto Sans Arabic", "serif"],
+            "display-lg-mobile": ["Playfair Display"],
+            "display-lg": ["Playfair Display"],
+            "label-md": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "body-md": ["1rem", { "lineHeight": "1.5rem", "fontWeight": "400" }],
+            "urdu-body": ["0.9375rem", { "lineHeight": "1.75rem", "fontWeight": "400" }],
+            "headline-md": ["1.375rem", { "lineHeight": "1.75rem", "fontWeight": "600" }],
+            "headline-lg": ["1.75rem", { "lineHeight": "2.25rem", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-sm": ["0.875rem", { "lineHeight": "1.25rem", "fontWeight": "400" }],
+            "label-lg": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "body-lg": ["1.125rem", { "lineHeight": "1.75rem", "fontWeight": "400" }],
+            "headline-sm": ["1.125rem", { "lineHeight": "1.5rem", "fontWeight": "600" }],
+            "label-sm": ["0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.03em", "fontWeight": "600" }],
+            "urdu-title": ["1.125rem", { "lineHeight": "2rem", "fontWeight": "500" }],
+            "display-lg-mobile": ["1.875rem", { "lineHeight": "2.25rem", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "display-lg": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-md": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.02em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-warm-shadow {
+      box-shadow: 0 -8px 30px rgba(31, 41, 55, 0.16), 0 -2px 10px rgba(180, 83, 9, 0.08);
+    }
+    .card-soft-shadow {
+      box-shadow: 0 4px 20px -2px rgba(180, 83, 9, 0.08);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-charcoal-ink text-charcoal-ink font-body-md antialiased min-h-screen flex justify-center items-end sm:items-center p-0 sm:p-4">
+<!-- Mobile Device Simulation Frame (390px width lock) -->
+<div class="relative w-full max-w-[390px] h-[844px] max-h-[844px] bg-warm-parchment overflow-hidden flex flex-col justify-between shadow-2xl sm:rounded-xl">
+<!-- 1. BACKGROUND CANVAS (Dimmed Backdrop Recipe Screen Behind Modal) -->
+<div class="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
+<!-- App Header Mock behind backdrop -->
+<header class="bg-warm-parchment flex justify-between items-center w-full px-space-md py-space-sm">
+<span class="material-symbols-outlined text-primary text-[24px]">menu</span>
+<span class="font-headline-sm text-headline-sm font-bold text-primary">آج کیا بناؤں؟</span>
+<span class="material-symbols-outlined text-primary text-[24px]">account_circle</span>
+</header>
+<!-- Dimmed Upper Preview Card (Chicken Pulao) -->
+<div class="p-space-md opacity-40 filter blur-[0.5px]">
+<div class="bg-surface-pure rounded-xl overflow-hidden border border-border-subtle p-space-sm mb-space-md">
+<div class="relative w-full h-36 rounded-lg overflow-hidden mb-space-sm">
+<img class="w-full h-full object-cover" data-alt="A fragrant Pakistani golden basmati Chicken Pulao in a rustic terracotta clay handi, garnished with caramelised fried onions, crisp fresh mint leaves, and steamed whole spices in warm natural ambient kitchen morning lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPqV_X6oXVGjaESbyfqkolJODuBFkKv454cvmXCIMSTusoPcO3ptBm7-VRMUDodpDe8Wbixwi2_W7tmqLK22UzYq_ZJEGA9G1qb6x460vsJubhrycwunMSHVS3WaFw44G72BMnxHd7VpwhWpGLWUmtb2-M6xwp5MWoWVLq9Hu2CDUJm2kvSLyX1K4fu3jlnm1BVNjsqnLNNcH2JcOIOR83gxdTDM42onG7vHAlGNIi"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h2 class="font-headline-md text-headline-md text-charcoal-ink">Chicken Pulao</h2>
+<span class="font-urdu-title text-urdu-title text-terracotta-clay block -mt-1">چکن پلاؤ</span>
+</div>
+<span class="bg-turmeric-glow text-terracotta-clay font-label-md text-label-md px-space-sm py-space-xs rounded-full border border-border-subtle">
+              ~620 kcal • 32g Protein
+            </span>
+</div>
+</div>
+</div>
+<!-- Scrim overlay -->
+<div class="absolute inset-0 bg-charcoal-ink/50 backdrop-blur-[2px]"></div>
+</div>
+<!-- 2. FOREGROUND BOTTOM SHEET MODAL (The Active Task Canvas) -->
+<div class="relative z-10 w-full mt-auto bg-surface-pure rounded-t-xl custom-warm-shadow flex flex-col max-h-[760px] overflow-hidden border-t border-border-subtle">
+<!-- Drag Handle & Modal Header -->
+<div class="pt-space-sm pb-space-xs flex flex-col items-center shrink-0">
+<div class="w-10 h-1 rounded-full bg-border-subtle mb-space-sm"></div>
+<!-- Dish Micro Header inside Sheet -->
+<div class="w-full px-space-md flex items-center justify-between pb-space-xs border-b border-border-subtle/60">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg overflow-hidden border border-border-subtle shrink-0">
+<img class="w-full h-full object-cover" data-alt="Close up shot of authentic spiced Desi chicken pulao with succulent tender bone-in chicken piece and saffron-infused basmati grains." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9Dr6l43Mw057yDE_OHArMJurQdjkVkI7TSCJjGS3-BCkwjLRth5fHn61GNiZ3yG4fNTNR5ImeCsITh7VVe2s0BvznTScyagJacue7_7jvrToDbcnoni1y9fJI9UdRFRC1_yTCrv1NEnzcwhqDr0S3R5dwbr140ba3NyIByamBxRe3Q1XK1p3tImrPp6_BVRXSkaGWkwl8CS13-p9wV8i8tIiVrnmqyeFD3OnXrljb"/>
+</div>
+<div>
+<div class="flex items-center gap-1.5">
+<h3 class="font-headline-sm text-headline-sm text-charcoal-ink leading-tight">Chicken Pulao</h3>
+<span class="font-urdu-title text-urdu-title text-terracotta-clay leading-none">(چکن پلاؤ)</span>
+</div>
+<p class="font-label-sm text-label-sm text-warm-gray">Base: ~620 kcal • 32g Protein • 72g Carbs</p>
+</div>
+</div>
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-warm-parchment text-warm-gray transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+</div>
+<!-- Modal Scrollable Body -->
+<div class="overflow-y-auto px-space-md py-space-sm space-y-space-md overscroll-contain">
+<!-- SECTION 2: Desi Roti / Rice Selector & Interactive Stepper -->
+<section class="space-y-space-sm">
+<div class="flex items-baseline justify-between">
+<h4 class="font-headline-sm text-headline-sm text-charcoal-ink flex items-center gap-1">
+<span>Saath me kya khayein gay?</span>
+<span class="font-urdu-body text-urdu-body text-terracotta-clay text-[0.85rem]">(ساتھ کیا لیں گے؟)</span>
+</h4>
+<span class="font-label-sm text-label-sm text-warm-gray">Accompaniment</span>
+</div>
+<!-- Segmented Toggle Options -->
+<div class="grid grid-cols-3 gap-space-xs p-1 bg-warm-parchment rounded-xl border border-border-subtle">
+<!-- Option 1: Roti (Active/Selected) -->
+<button class="flex items-center justify-center py-2 px-1 rounded-lg bg-turmeric-glow border border-saffron-amber shadow-sm text-terracotta-clay font-label-md text-label-md font-semibold gap-1" type="button">
+<span>🫓</span>
+<span>Roti / Phulka</span>
+</button>
+<!-- Option 2: Sada Chawal -->
+<button class="flex items-center justify-center py-2 px-1 rounded-lg bg-surface-pure border border-transparent hover:border-border-subtle text-charcoal-ink font-label-md text-label-md transition-all gap-1" type="button">
+<span>🍚</span>
+<span>Sada Chawal</span>
+</button>
+<!-- Option 3: Baghair Roti -->
+<button class="flex items-center justify-center py-2 px-1 rounded-lg bg-surface-pure border border-transparent hover:border-border-subtle text-warm-gray font-label-md text-label-md transition-all gap-1" type="button">
+<span>Baghair Roti</span>
+</button>
+</div>
+<!-- Roti Quantity Stepper Container -->
+<div class="bg-warm-parchment/60 rounded-xl p-space-sm border border-border-subtle flex items-center justify-between">
+<div class="space-y-0.5">
+<span class="font-label-sm text-label-sm text-warm-gray uppercase tracking-wider block">Portion Control</span>
+<span class="font-headline-sm text-headline-sm font-bold text-charcoal-ink" id="roti-display-text">2 Roti (Phulka)</span>
+<div class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-turmeric-glow border border-saffron-amber/30 text-saffron-amber font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span id="roti-macro-badge">+180 kcal • 36g Carbs • 6g Protein</span>
+</div>
+</div>
+<!-- Stepper Controller Buttons (Min 48px tactile ergonomics) -->
+<div class="flex items-center gap-2 bg-surface-pure p-1 rounded-xl border border-border-subtle shadow-sm">
+<button aria-label="Decrease Roti count" class="w-12 h-12 min-w-[48px] min-h-[48px] rounded-lg bg-warm-parchment hover:bg-border-subtle/50 active:scale-95 text-charcoal-ink flex items-center justify-center font-bold text-lg transition-transform focus:outline-none focus:ring-2 focus:ring-saffron-amber" id="btn-minus" type="button">
+<span class="material-symbols-outlined text-[20px]">remove</span>
+</button>
+<span class="w-6 text-center font-headline-md text-headline-md font-bold text-terracotta-clay" id="roti-count-num">
+                2
+              </span>
+<button aria-label="Increase Roti count" class="w-12 h-12 min-w-[48px] min-h-[48px] rounded-lg bg-saffron-amber text-on-primary hover:bg-terracotta-clay active:scale-95 flex items-center justify-center font-bold text-lg transition-transform focus:outline-none focus:ring-2 focus:ring-terracotta-clay" id="btn-plus" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+</div>
+</section>
+<!-- SECTION 3: Mealtime Fresh Pairings -->
+<section class="space-y-space-xs">
+<div class="flex justify-between items-baseline">
+<h4 class="font-headline-sm text-headline-sm text-charcoal-ink flex items-center gap-1.5">
+<span>Saath Me Kya Shamil Karein?</span>
+<span class="text-xs bg-cardamom-soft text-cardamom-emerald px-1.5 py-0.5 rounded font-label-sm font-semibold">Recommended</span>
+</h4>
+</div>
+<p class="font-body-sm text-body-sm text-warm-gray">Fresh digestive &amp; nutrient balancing sides</p>
+<div class="flex flex-col gap-2 pt-1">
+<!-- Pairing Chip 1: Salad (Checked) -->
+<label class="group relative flex items-center justify-between p-3 rounded-xl border border-secondary/40 bg-cardamom-soft/40 cursor-pointer transition-all hover:bg-cardamom-soft/70">
+<div class="flex items-center gap-2.5">
+<span class="text-xl">🥗</span>
+<div>
+<div class="flex items-center gap-1">
+<span class="font-label-lg text-label-lg text-charcoal-ink">Fresh Salad (Kheera &amp; Tamatar)</span>
+</div>
+<span class="font-label-sm text-label-sm text-cardamom-emerald font-semibold">+25 kcal • High Fiber &amp; Hydration</span>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full bg-cardamom-emerald text-on-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+</label>
+<!-- Pairing Chip 2: Raita (Checked) -->
+<label class="group relative flex items-center justify-between p-3 rounded-xl border border-secondary/40 bg-cardamom-soft/40 cursor-pointer transition-all hover:bg-cardamom-soft/70">
+<div class="flex items-center gap-2.5">
+<span class="text-xl">🥒</span>
+<div>
+<span class="font-label-lg text-label-lg text-charcoal-ink">Zeera Raita</span>
+<span class="block font-label-sm text-label-sm text-cardamom-emerald font-semibold">+45 kcal • Calcium &amp; Probiotic Cooling</span>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full bg-cardamom-emerald text-on-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+</label>
+<!-- Pairing Chip 3: Mint Chutney (Unchecked) -->
+<label class="group relative flex items-center justify-between p-3 rounded-xl border border-border-subtle bg-surface-pure cursor-pointer transition-all hover:bg-warm-parchment">
+<div class="flex items-center gap-2.5">
+<span class="text-xl">🍋</span>
+<div>
+<span class="font-label-lg text-label-lg text-charcoal-ink">Mint &amp; Coriander Chutney</span>
+<span class="block font-label-sm text-label-sm text-warm-gray">+15 kcal • Herbal Digestion</span>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full border border-border-subtle flex items-center justify-center text-transparent group-hover:border-warm-gray">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</div>
+</label>
+</div>
+</section>
+<!-- SECTION 4: Evening & Night Desi Nutrition Pairing -->
+<section class="space-y-space-xs pb-1">
+<div class="flex justify-between items-baseline">
+<h4 class="font-headline-sm text-headline-sm text-charcoal-ink">
+              Raat Ko / Baad Me
+            </h4>
+<span class="font-label-sm text-label-sm text-terracotta-clay font-medium">Daily Gaps Cover</span>
+</div>
+<p class="font-body-sm text-body-sm text-warm-gray">Authentic Desi nutrition &amp; wholesome balance</p>
+<div class="flex flex-col gap-2 pt-1">
+<!-- Snack 1: Badam (Checked) -->
+<label class="group relative flex items-center justify-between p-2.5 rounded-xl border border-saffron-amber/40 bg-turmeric-glow/60 cursor-pointer transition-all hover:bg-turmeric-glow">
+<div class="flex items-center gap-2.5">
+<span class="text-xl">🥜</span>
+<div>
+<span class="font-label-md text-label-md text-charcoal-ink font-semibold">5-6 Badam (Almonds) raat ko</span>
+<span class="block font-label-sm text-label-sm text-saffron-amber font-medium">+50 kcal • Healthy Fats &amp; Magnesium</span>
+</div>
+</div>
+<div class="w-5 h-5 rounded-full bg-saffron-amber text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+</label>
+<!-- Snack 2: Apple (Unchecked) -->
+<label class="group relative flex items-center justify-between p-2.5 rounded-xl border border-border-subtle bg-surface-pure cursor-pointer transition-all hover:bg-warm-parchment">
+<div class="flex items-center gap-2.5">
+<span class="text-xl">🍎</span>
+<div>
+<span class="font-label-md text-label-md text-charcoal-ink font-medium">Ek Seb (Apple) shaam ko</span>
+<span class="block font-label-sm text-label-sm text-warm-gray">+60 kcal • Natural Vitamins</span>
+</div>
+</div>
+<div class="w-5 h-5 rounded-full border border-border-subtle flex items-center justify-center text-transparent group-hover:border-warm-gray">
+<span class="material-symbols-outlined text-[12px]">check</span>
+</div>
+</label>
+<!-- Snack 3: Garam Doodh (Unchecked) -->
+<label class="group relative flex items-center justify-between p-2.5 rounded-xl border border-border-subtle bg-surface-pure cursor-pointer transition-all hover:bg-warm-parchment">
+<div class="flex items-center gap-2.5">
+<span class="text-xl">🥛</span>
+<div>
+<span class="font-label-md text-label-md text-charcoal-ink font-medium">Garam Doodh (Warm Milk)</span>
+<span class="block font-label-sm text-label-sm text-warm-gray">+90 kcal • Sleep &amp; Joint Strength</span>
+</div>
+</div>
+<div class="w-5 h-5 rounded-full border border-border-subtle flex items-center justify-center text-transparent group-hover:border-warm-gray">
+<span class="material-symbols-outlined text-[12px]">check</span>
+</div>
+</label>
+</div>
+</section>
+</div>
+<!-- 5. STICKY BOTTOM SUMMARY & CONFIRMATION CTA -->
+<div class="border-t border-border-subtle bg-warm-parchment px-space-md pt-space-sm pb-space-md space-y-space-sm shrink-0 shadow-lg">
+<!-- Floating summary card -->
+<div class="bg-surface-pure rounded-lg p-2.5 border border-border-subtle flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[22px]">restaurant</span>
+<div>
+<span class="font-label-sm text-label-sm text-warm-gray block">Estimated Total Meal</span>
+<span class="font-label-lg text-label-lg font-bold text-charcoal-ink" id="meal-grand-total">
+                ~875 kcal • 40g Protein
+              </span>
+</div>
+</div>
+<span class="bg-cardamom-soft text-cardamom-emerald font-label-sm text-label-sm px-2 py-0.5 rounded-full font-semibold">
+            High Fiber
+          </span>
+</div>
+<!-- Primary Action Button (Saffron Amber #E65100, 52px height) -->
+<button class="w-full h-[52px] min-h-[52px] rounded-lg bg-saffron-amber hover:bg-terracotta-clay text-on-primary font-label-lg text-label-lg font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg active:scale-[0.99] transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Khana Final Karein (Log to History)</span>
+</button>
+<!-- Secondary Back/Cancel Link -->
+<div class="text-center pt-0.5">
+<button class="font-label-md text-label-md text-warm-gray hover:text-charcoal-ink font-medium transition-colors" type="button">
+            Wapas Jayein (Cancel / Back)
+          </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Interactive JavaScript for Stepper & Macro Tally -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let count = 2;
+      const baseDishCal = 620;
+      const baseDishProtein = 32;
+      const fixedSidesCal = 25 + 45 + 50; // Salad (25) + Raita (45) + Badam (50) = 120
+      const fixedSidesProtein = 2 + 3 + 2; // ~7g
+
+      const displayCount = document.getElementById('roti-count-num');
+      const displayText = document.getElementById('roti-display-text');
+      const macroBadge = document.getElementById('roti-macro-badge');
+      const grandTotal = document.getElementById('meal-grand-total');
+
+      function updateUI() {
+        displayCount.innerText = count;
+        displayText.innerText = count === 1 ? '1 Roti (Phulka)' : `${count} Roti (Phulka)`;
+        
+        const rotiCals = count * 90;
+        const rotiCarbs = count * 18;
+        const rotiProt = count * 3;
+        macroBadge.innerText = `+${rotiCals} kcal • ${rotiCarbs}g Carbs • ${rotiProt}g Protein`;
+
+        const totalCals = baseDishCal + rotiCals + fixedSidesCal;
+        const totalProt = baseDishProtein + rotiProt + fixedSidesProtein;
+        grandTotal.innerText = `~${totalCals} kcal • ${totalProt}g Protein`;
+      }
+
+      document.getElementById('btn-plus').addEventListener('click', () => {
+        if (count < 6) {
+          count++;
+          updateUI();
+        }
+      });
+
+      document.getElementById('btn-minus').addEventListener('click', () => {
+        if (count > 0) {
+          count--;
+          updateUI();
+        }
+      });
+    });
+  </script>
+</body></html>

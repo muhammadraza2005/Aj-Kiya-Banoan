@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * ============================================================================
+ * ARCHITECTURAL CONTEXT: Global Styles & Mobile Kitchen Accessibility
+ * ----------------------------------------------------------------------------
+ * PURPOSE:
+ * Defines baseline aesthetics, custom scrollbar behaviors for horizontal food tags,
+ * and high-legibility Urdu script styling.
+ * 
+ * ERGONOMIC CONSIDERATIONS:
+ * In a kitchen setting, users often interact with one hand while cooking.
+ * Large touch targets, high contrast, and smooth tap animations reduce friction.
+ * ============================================================================
+ */
+
+@layer base {
+  body {
+    @apply bg-warm-parchment text-charcoal-ink font-sans antialiased min-h-screen;
+    touch-action: manipulation;
+  }
+}
+
+/* Hide scrollbar for pleasant horizontal chip rows */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Authentic Urdu script styling with native line-height */
+.urdu-font {
+  font-family: var(--font-urdu), 'Noto Nastaliq Urdu', 'Noto Sans Arabic', serif;
+  line-height: 1.8;
+  direction: rtl;
+}
+
+/* Ambient warm backdrop for desktop viewport presentation */
+.desktop-ambient-canvas {
+  background: radial-gradient(circle at 50% 10%, rgba(230, 81, 0, 0.06) 0%, rgba(250, 250, 248, 1) 70%);
+}
