@@ -1,168 +1,239 @@
 /**
  * ============================================================================
- * ARCHITECTURAL CONTEXT: Recommendation & Variety Scoring Engine
+ * ARCHITECTURAL CONTEXT: Recommendation & Scoring Engine
  * ----------------------------------------------------------------------------
  * PURPOSE:
- * Implements the deterministic Desi meal recommendation algorithm.
- * Balances family preferences, nutritional balance, and repetition penalties.
- * 
- * ALGORITHMIC BREAKDOWN:
- * Final Score (0 - 100) = 
- *     Base Preference Score (30%)
- *   + Repetition Decay Penalty (40%)
- *   + Nutritional Balance Boost (20%)
- *   + Prep Friction Factor (10%)
- * 
- * WHY PURE FUNCTIONS:
- * By keeping this algorithm free of React hooks and external I/O, it can be
- * executed synchronously in Next.js Server Components, Server Actions, or
- * client-side instant re-rolls ("Dusra Dikhao 🎲").
+ * Implements the deterministic scoring formula specified in `backend.md`.
+ * We evaluate preferences, recency, variety, nutrients, and penalties.
+ * No black-box ML - everything outputs a tangible `RecommendationReason`.
  * ============================================================================
  */
 
-import { Dish, MealLogEntry, FamilyMember } from '@/types';
+import { Dish, MealLogEntry, FamilyMember, ScoredDish, RecommendationReason, AccompanimentType, NutritionMetrics } from '@/types';
 
 /**
- * Calculates days elapsed between a meal log timestamp and today.
+ * Helper: Calculates the number of days between a past date string and today.
+ * Useful for calculating recency penalties and variety bonuses.
  */
 function getDaysSince(dateString: string): number {
   const mealDate = new Date(dateString);
+  // Strip time from both dates to ensure accurate day calculation
+  mealDate.setHours(0, 0, 0, 0);
   const now = new Date();
+  now.setHours(0, 0, 0, 0);
   const diffTime = Math.abs(now.getTime() - mealDate.getTime());
   return Math.floor(diffTime / (1000 * 60 * 60 * 24));
 }
 
 /**
- * CONCEPTUAL: Repetition Penalty
- * Desi households strongly resist having the exact same dish within 3 days,
- * and resist repeating the same meat category two consecutive days.
- * 
- * Decay Curve:
- * 0 days ago (today): 0% multiplier (blocked)
- * 1 day ago (yesterday): 20% multiplier (heavy penalty)
- * 2 days ago: 50% multiplier
- * 3 days ago: 75% multiplier
- * >= 4 days ago: 100% (penalty cleared)
+ * Calculates the nutritional values for a meal combination.
+ * Follows the "Accompaniment & Nutrition Math" in backend.md
  */
-export function calculateRepetitionMultiplier(dish: Dish, history: MealLogEntry[]): number {
-  // Check exact dish recurrence
-  const lastEatenExact = history.find(entry => entry.dishId === dish.id);
+export function calculateMealMacros(dish: Dish, accompaniment: AccompanimentType, qty: number = 1): NutritionMetrics {
+  // Base Roti Macros from backend.md: +90 kcal, 3g protein, 18g carbs, 0.5g fat, 2.5g fiber
+  const rotiMacros = { calories: 90, protein: 3, carbs: 18, fat: 0.5, fiber: 2.5 };
+  
+  let addedCalories = 0;
+  let addedProtein = 0;
+  
+  if (accompaniment === 'roti') {
+    addedCalories = rotiMacros.calories * qty;
+    addedProtein = rotiMacros.protein * qty;
+  }
+  
+  // Note: Here we would add Naan / Rice macros as well based on real data, using placeholders for now.
+
+  return {
+    ...dish.nutrition,
+    calories: dish.nutrition.calories + addedCalories,
+    proteinGrams: dish.nutrition.proteinGrams + addedProtein,
+  };
+}
+
+/**
+ * Evaluates a single dish and generates its score and human-readable reasons.
+ * Formula: S_pref + S_recency + S_variety + S_nutrients + S_mood - P_rep - P_dislike - P_skip
+ */
+export function scoreDish(
+  dish: Dish,
+  history: MealLogEntry[],
+  family: FamilyMember[],
+  skippedDishIds: string[], // "Aaj Nahi" dismissed dishes today
+  moodFilter?: string
+): ScoredDish {
+  
+  let totalScore = 0;
+  const reasons: RecommendationReason[] = [];
+
+  // ==========================================
+  // 1. BASE PREFERENCE (0 to 20) + FAVORITES (+15)
+  // ==========================================
+  let isFavorite = false;
+  let isDisliked = false;
+  // We simplify user preference to just look at family favorites for now.
+  // In a real DB, each user has a 1-5 rating. Here we assume Favorite = 5 rating.
+  for (const member of family) {
+    if (member.favoriteDishIds.includes(dish.id)) isFavorite = true;
+    if (member.dislikedDishIds.includes(dish.id)) isDisliked = true;
+  }
+
+  if (isFavorite) {
+    totalScore += 20; // assumed 5 star rating (5 * 4) = 20
+    totalScore += 15; // Favorite bonus
+    reasons.push({
+      type: 'favorite',
+      badgeEn: 'Family Favorite',
+      badgeUrdu: 'گھر کی پسند',
+      explanationEn: 'This dish is marked as a household favorite.',
+      explanationUrdu: 'یہ کھانا سب کا پسندیدہ ہے۔'
+    });
+  } else if (isDisliked) {
+    totalScore -= 50;
+    reasons.push({
+      type: 'penalty',
+      badgeEn: 'Disliked',
+      badgeUrdu: 'ناپسندیدہ',
+      explanationEn: 'Someone in the house dislikes this dish.',
+      explanationUrdu: 'گھر میں کسی کو یہ پسند نہیں ہے۔'
+    });
+  }
+
+  // ==========================================
+  // 2. RECENCY & REPETITION PENALTY
+  // ==========================================
+  const exactLogs = history.filter(h => h.dishId === dish.id).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const lastEatenExact = exactLogs[0];
+  
   if (lastEatenExact) {
     const daysSince = getDaysSince(lastEatenExact.date);
-    if (daysSince === 0) return 0.05;
-    if (daysSince === 1) return 0.20;
-    if (daysSince === 2) return 0.50;
-    if (daysSince === 3) return 0.75;
-  }
-
-  // Check category recurrence (e.g. don't suggest Karahi if Karahi was cooked yesterday)
-  const mostRecentMeal = history[0];
-  if (mostRecentMeal && mostRecentMeal.category === dish.category) {
-    return 0.65; // Soft category variety penalty
-  }
-
-  return 1.0;
-}
-
-/**
- * CONCEPTUAL: Nutritional Balance Boost
- * If the household has had high carbs and low greens in the last 48 hours,
- * dishes with high iron, fiber, and protein receive an affirmative boost.
- */
-export function calculateNutritionBoost(dish: Dish, recentHistory: MealLogEntry[]): number {
-  let boost = 0;
-
-  // Check if Daal/Sabzi has been neglected in the last 3 days
-  const recentCategories = recentHistory.slice(0, 3).map(h => h.category);
-  const hadVegOrDaal = recentCategories.includes('sabzi_veg') || recentCategories.includes('daal_lentils');
-
-  if (!hadVegOrDaal && (dish.category === 'sabzi_veg' || dish.category === 'daal_lentils')) {
-    boost += 15; // Vital dietary balance incentive
-  }
-
-  // High iron incentive (combatting Desi household anemia gaps)
-  if (dish.nutrition.ironMg >= 4.0) {
-    boost += 8;
-  }
-
-  // High protein incentive (>= 30g)
-  if (dish.nutrition.proteinGrams >= 30) {
-    boost += 7;
-  }
-
-  return Math.min(boost, 30);
-}
-
-/**
- * CONCEPTUAL: Family Preference Weighting
- * Calculates affinity score based on how many family members love or dislike this dish.
- */
-export function calculateFamilyAffinityScore(dish: Dish, family: FamilyMember[]): number {
-  let affinityScore = 50; // Baseline neutrality
-
-  for (const member of family) {
-    // If a member has this in favorites
-    if (member.favoriteDishIds.includes(dish.id)) {
-      affinityScore += 18;
+    
+    if (daysSince >= 7) {
+      totalScore += 25;
+      reasons.push({ type: 'recency', badgeEn: 'Not cooked in 7+ days', badgeUrdu: '7 دن سے نہیں پکا', explanationEn: 'It has been over a week since you had this.', explanationUrdu: 'اسے پکے ہوئے ایک ہفتے سے زیادہ ہو گیا ہے۔' });
+    } else if (daysSince >= 4 && daysSince <= 6) {
+      totalScore += 15;
+    } else if (daysSince >= 2 && daysSince <= 3) {
+      totalScore += 5;
+    } else if (daysSince === 1) {
+      // Eaten yesterday penalty!
+      totalScore -= 35;
+      reasons.push({ type: 'penalty', badgeEn: 'Cooked Yesterday', badgeUrdu: 'کل ہی پکایا تھا', explanationEn: 'You just had this dish yesterday.', explanationUrdu: 'یہ کھانا کل ہی کھایا تھا۔' });
+    } else if (daysSince === 0) {
+      // Eaten today
+      totalScore -= 100; 
+    } else if (daysSince === 2) {
+      totalScore -= 15; // Eaten 2 days ago penalty
     }
-    // If a picky eater strongly dislikes this
-    if (member.dislikedDishIds.includes(dish.id)) {
-      affinityScore -= 25; // Picky eater protection
+  } else {
+    // Never eaten before in logged history
+    totalScore += 25;
+    reasons.push({ type: 'recency', badgeEn: 'Fresh Idea', badgeUrdu: 'نئی ڈش', explanationEn: 'You haven\'t cooked this recently.', explanationUrdu: 'یہ حال ہی میں نہیں بنایا گیا۔' });
+  }
+
+  // ==========================================
+  // 3. VARIETY (Category Diversity)
+  // ==========================================
+  const recentCategories = history.slice(0, 3).map(h => h.category);
+  const categoryDaysSince = recentCategories.indexOf(dish.category);
+  
+  if (categoryDaysSince === -1) {
+    // Category not eaten in last 3 days
+    totalScore += 15;
+    reasons.push({ type: 'variety', badgeEn: `Missing ${dish.category}`, badgeUrdu: 'نئی قسم', explanationEn: `You haven't had this type of dish recently.`, explanationUrdu: 'یہ قسم کچھ دنوں سے نہیں کھائی گئی۔' });
+  } else if (categoryDaysSince === 0) { // meaning eaten today/yesterday (depending on slice order)
+    // Same category eaten yesterday/today
+    totalScore -= 15;
+  }
+
+  // ==========================================
+  // 4. NUTRIENT GAP
+  // ==========================================
+  // Simplified iron check for the example
+  const recentIronRich = history.slice(0, 5).some(h => h.dishName?.includes('Kaleji') || h.dishName?.includes('Palak'));
+  if (!recentIronRich && dish.nutrition.ironMg >= 4.0) {
+    totalScore += 20;
+    reasons.push({ type: 'nutrient', badgeEn: 'Iron Boost', badgeUrdu: 'آئرن سے بھرپور', explanationEn: 'Restores missing iron for the week.', explanationUrdu: 'اس ہفتے کی آئرن کی کمی پوری کرتا ہے۔' });
+  }
+
+  // Protein balance check
+  if (dish.nutrition.proteinGrams >= 25) {
+    totalScore += 15;
+  }
+
+  // ==========================================
+  // 5. MOOD / FILTER (e.g., Jaldi < 30m, Gosht)
+  // ==========================================
+  if (moodFilter) {
+    if (moodFilter === 'quick' && dish.cookingTimeMinutes <= 30) {
+      totalScore += 10;
+      reasons.push({ type: 'quick', badgeEn: 'Under 30 mins', badgeUrdu: '30 منٹ سے کم', explanationEn: 'Quick to cook, matches your mood.', explanationUrdu: 'جلدی تیار ہونے والا کھانا۔' });
+    }
+    // E.g., if filter is 'meat' and category is meat
+    if (moodFilter === 'meat' && (dish.category === 'meat' || dish.proteinSource === 'chicken' || dish.proteinSource === 'beef' || dish.proteinSource === 'mutton')) {
+      totalScore += 10;
     }
   }
 
-  // Cap affinity between 0 and 100
-  return Math.max(0, Math.min(100, affinityScore));
-}
+  // ==========================================
+  // 6. SKIP TODAY PENALTY
+  // ==========================================
+  if (skippedDishIds.includes(dish.id)) {
+    totalScore -= 1000;
+    reasons.push({ type: 'penalty', badgeEn: 'Skipped Today', badgeUrdu: 'آج نہیں', explanationEn: 'You dismissed this dish for today.', explanationUrdu: 'آپ نے آج اس ڈش کو نظرانداز کیا ہے۔' });
+  }
 
-export interface ScoredDish {
-  dish: Dish;
-  compositeScore: number;
-  matchPercentage: number;
-  varietyTag: string;
-  nutritionTag: string;
+  // Determine Tier based on final score
+  let tier: 'BEST_CHOICE' | 'ALSO_CONSIDER' | 'AAJ_NAHI' = 'ALSO_CONSIDER';
+  if (totalScore >= 60 && !skippedDishIds.includes(dish.id) && !isDisliked) {
+    tier = 'BEST_CHOICE';
+  } else if (totalScore < 0 || skippedDishIds.includes(dish.id) || isDisliked) {
+    tier = 'AAJ_NAHI';
+  }
+
+  return {
+    foodId: dish.id,
+    name: dish.name || dish.englishName || '',
+    urduName: dish.urduName,
+    score: totalScore,
+    tier,
+    reasons,
+    dish
+  };
 }
 
 /**
- * Ranks all candidate dishes and returns an ordered list with breakdown metadata.
+ * Main Orchestrator: Ranks all dishes and groups them by Tiers.
  */
-export function rankDishesForToday(
+export function generateDailyRecommendations(
   dishes: Dish[],
   history: MealLogEntry[],
-  family: FamilyMember[]
-): ScoredDish[] {
-  return dishes
-    .map(dish => {
-      const affinity = calculateFamilyAffinityScore(dish, family);
-      const repMultiplier = calculateRepetitionMultiplier(dish, history);
-      const nutritionBoost = calculateNutritionBoost(dish, history);
+  family: FamilyMember[],
+  skippedDishIds: string[],
+  moodFilter?: string
+): { topPick: ScoredDish | null, alternatives: ScoredDish[], skipToday: ScoredDish[] } {
+  
+  const scoredDishes = dishes.map(d => scoreDish(d, history, family, skippedDishIds, moodFilter));
+  
+  // Sort descending by score
+  scoredDishes.sort((a, b) => b.score - a.score);
 
-      // Composite calculation
-      const rawScore = (affinity * 0.5 + nutritionBoost * 1.5) * repMultiplier;
-      const compositeScore = Math.round(Math.max(10, Math.min(99, rawScore)));
+  const bestChoices = scoredDishes.filter(d => d.tier === 'BEST_CHOICE');
+  const alsoConsider = scoredDishes.filter(d => d.tier === 'ALSO_CONSIDER');
+  const aajNahi = scoredDishes.filter(d => d.tier === 'AAJ_NAHI');
 
-      // Generate human-friendly badge labels
-      let varietyTag = 'Fresh & Unrepeated';
-      const lastEaten = history.find(e => e.dishId === dish.id);
-      if (lastEaten) {
-        const days = getDaysSince(lastEaten.date);
-        varietyTag = `Cooked ${days} days ago`;
-      } else {
-        varietyTag = 'Not cooked this week';
-      }
+  // Hero Card is the highest scoring BEST_CHOICE, fallback to ALSO_CONSIDER if none exist.
+  let topPick = bestChoices.length > 0 ? bestChoices[0] : (alsoConsider.length > 0 ? alsoConsider[0] : null);
+  
+  // Remove top pick from its list
+  let alternatives = [...bestChoices.slice(1), ...alsoConsider];
+  if (topPick) {
+    alternatives = alternatives.filter(d => d.foodId !== topPick!.foodId);
+  }
 
-      let nutritionTag = `${dish.nutrition.proteinGrams}g Protein • ${dish.nutrition.calories} kcal`;
-      if (dish.nutrition.ironMg >= 4.5) {
-        nutritionTag += ' • Iron Rich';
-      }
-
-      return {
-        dish,
-        compositeScore,
-        matchPercentage: compositeScore,
-        varietyTag,
-        nutritionTag
-      };
-    })
-    .sort((a, b) => b.compositeScore - a.compositeScore);
+  // Only take top 2 alternatives and top 2 skipped for the UI payload
+  return {
+    topPick,
+    alternatives: alternatives.slice(0, 2),
+    skipToday: aajNahi.slice(0, 2)
+  };
 }

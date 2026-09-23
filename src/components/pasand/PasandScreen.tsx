@@ -49,7 +49,7 @@ export const PasandScreen: React.FC<PasandScreenProps> = ({
       // Search query filter (matches English or Urdu)
       if (searchQuery.trim() !== '') {
         const query = searchQuery.toLowerCase();
-        const matchEng = dish.englishName.toLowerCase().includes(query);
+        const matchEng = (dish.englishName || dish.name || '').toLowerCase().includes(query);
         const matchUrdu = dish.urduName.includes(query);
         const matchTags = dish.tags.some(t => t.toLowerCase().includes(query));
         return matchEng || matchUrdu || matchTags;
@@ -122,7 +122,7 @@ export const PasandScreen: React.FC<PasandScreenProps> = ({
       </div>
 
       {/* 4. Dish Cards Catalog Grid */}
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-3">
         {filteredDishes.length === 0 ? (
           <div className="bg-surface-pure border border-border-subtle rounded-2xl p-8 text-center">
             <span className="text-3xl mb-2 block">🔍</span>
@@ -140,7 +140,7 @@ export const PasandScreen: React.FC<PasandScreenProps> = ({
               >
                 <div className="flex items-start gap-3">
                   {/* Thumbnail Image */}
-                  <div className="w-18 h-18 rounded-lg overflow-hidden shrink-0 border border-border-subtle relative">
+                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-lg overflow-hidden shrink-0 border border-border-subtle relative">
                     <img
                       src={dish.imageUrl}
                       alt={dish.imageAlt}
@@ -193,7 +193,7 @@ export const PasandScreen: React.FC<PasandScreenProps> = ({
                       </span>
                       <span className="text-[10px] text-warm-gray flex items-center gap-0.5">
                         <Clock className="w-3 h-3" />
-                        <span>{dish.prepTimeMinutes + dish.cookingTimeMinutes}m</span>
+                        <span>{(dish.prepTimeMinutes || 0) + dish.cookingTimeMinutes}m</span>
                       </span>
                     </div>
                   </div>

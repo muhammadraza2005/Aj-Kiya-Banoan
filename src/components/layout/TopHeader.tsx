@@ -38,11 +38,11 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
             <ChefHat className="w-5 h-5 text-saffron-amber" />
           </div>
           <div>
-            <h1 className="font-urdu text-xl font-bold text-primary leading-tight -mb-1">
+            <h1 className="font-urdu text-xl font-bold text-primary leading-tight">
               آج کیا بناؤں؟
             </h1>
             <p className="text-[11px] font-sans font-medium text-warm-gray tracking-tight">
-              Aaj Kya Banaun • Desi Kitchen Companion
+              Desi Kitchen Companion
             </p>
           </div>
         </div>

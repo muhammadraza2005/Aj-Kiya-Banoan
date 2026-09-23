@@ -32,8 +32,8 @@ import { FamilyScreen } from '@/components/family/FamilyScreen';
 import { MOCK_DISHES } from '@/data/mockDishes';
 import { INITIAL_MEAL_HISTORY } from '@/data/mockHistory';
 import { MOCK_FAMILY_MEMBERS } from '@/data/mockFamily';
-import { rankDishesForToday } from '@/domain/scoring';
-import { MealLogEntry, WeeklyVarietyScore } from '@/types';
+import { generateDailyRecommendations } from '@/domain/scoring';
+import { MealLogEntry, WeeklyVarietyScore, ScoredDish } from '@/types';
 
 export default function MainPage() {
   // Navigation tab state
@@ -52,9 +52,15 @@ export default function MainPage() {
   }, [familyMembers, activeMemberId]);
 
   // Compute live recommendation ranking via scoring engine
-  const scoredDishes = useMemo(() => {
-    return rankDishesForToday(dishes, history, [activeMember]);
+  const { topPick, alternatives, skipToday } = useMemo(() => {
+    return generateDailyRecommendations(dishes, history, [activeMember], []);
   }, [dishes, history, activeMember]);
+
+  const scoredDishes = useMemo(() => {
+    const list: ScoredDish[] = [];
+    if (topPick) list.push(topPick);
+    return [...list, ...alternatives, ...skipToday];
+  }, [topPick, alternatives, skipToday]);
 
   // Compute real-time weekly variety score
   const varietyScore: WeeklyVarietyScore = useMemo(() => {
@@ -110,8 +116,8 @@ export default function MainPage() {
   return (
     <div className="w-full min-h-screen bg-warm-parchment desktop-ambient-canvas flex justify-center selection:bg-turmeric-glow selection:text-terracotta-clay">
       
-      {/* Mobile Frame Container (Max-width locked at 430px for native phone feel) */}
-      <div className="w-full max-w-[430px] min-h-screen bg-warm-parchment flex flex-col relative shadow-xl sm:border-x sm:border-border-subtle">
+      {/* Responsive Frame Container */}
+      <div className="w-full max-w-md md:max-w-3xl lg:max-w-5xl min-h-screen bg-warm-parchment flex flex-col relative shadow-xl sm:border-x sm:border-border-subtle">
         
         {/* Sticky Top Header */}
         <TopHeader

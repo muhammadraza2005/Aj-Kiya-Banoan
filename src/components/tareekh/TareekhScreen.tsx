@@ -52,7 +52,7 @@ export const TareekhScreen: React.FC<TareekhScreenProps> = ({
     return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
   };
 
-  const getCategoryBadge = (category: string) => {
+  const getCategoryBadge = (category: string | undefined) => {
     switch (category) {
       case 'karahi_gosht':
         return { label: 'Gosht / Karahi', color: 'bg-primary/10 text-primary border-primary/20' };
@@ -155,7 +155,7 @@ export const TareekhScreen: React.FC<TareekhScreenProps> = ({
       </div>
 
       {/* 3. Chronological Meal History List */}
-      <div className="flex flex-col gap-2.5">
+      <div className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-2.5">
         <h3 className="font-serif text-sm font-bold text-charcoal-ink flex items-center gap-1.5">
           <CalendarDays className="w-4 h-4 text-saffron-amber" />
           <span>Past 7 Days History</span>
@@ -177,7 +177,7 @@ export const TareekhScreen: React.FC<TareekhScreenProps> = ({
                     <span className="text-[11px] font-bold text-saffron-amber">
                       {formatFriendlyDate(log.date)}
                     </span>
-                    <span className="text-[10px] text-warm-gray">• {log.mealType.split(' ')[0]}</span>
+                    <span className="text-[10px] text-warm-gray">• {(log.mealType || '').split(' ')[0]}</span>
                   </div>
 
                   <div className="flex items-center gap-1.5 mt-0.5">

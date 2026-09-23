@@ -28,8 +28,7 @@ import {
   TrendingUp,
   Info
 } from 'lucide-react';
-import { Dish, AccompanimentType, MealLogEntry } from '@/types';
-import { ScoredDish } from '@/domain/scoring';
+import { Dish, AccompanimentType, MealLogEntry, ScoredDish } from '@/types';
 import { MealPairingModal } from './MealPairingModal';
 import { SMART_PAIRINGS } from '@/data/mockDishes';
 
@@ -67,7 +66,9 @@ export const HomeDeck: React.FC<HomeDeckProps> = ({
   }
 
   const currentItem = scoredDishes[currentIndex % scoredDishes.length];
-  const { dish, matchPercentage, varietyTag } = currentItem;
+  const { dish, score, reasons } = currentItem;
+  const matchPercentage = score;
+  const varietyTag = reasons && reasons.length > 0 ? reasons[0].badgeEn : 'Fresh';
   const isFavorite = favoriteDishIds.includes(dish.id);
 
   // Calculate live dynamic calories with selected portion
@@ -158,10 +159,10 @@ export const HomeDeck: React.FC<HomeDeckProps> = ({
       )}
 
       {/* 3. Hero Recommendation Card */}
-      <div className="bg-surface-pure rounded-2xl border border-border-subtle shadow-warm-hero overflow-hidden flex flex-col transition-all">
+      <div className="bg-surface-pure rounded-2xl border border-border-subtle shadow-warm-hero overflow-hidden flex flex-col md:flex-row transition-all">
         
         {/* Image & Match Score Overlay */}
-        <div className="relative w-full h-52 bg-charcoal-ink overflow-hidden group">
+        <div className="relative w-full md:w-1/2 h-52 md:h-auto md:min-h-[320px] bg-charcoal-ink overflow-hidden group">
           <img
             src={dish.imageUrl}
             alt={dish.imageAlt}
@@ -209,7 +210,7 @@ export const HomeDeck: React.FC<HomeDeckProps> = ({
         </div>
 
         {/* Card Body */}
-        <div className="p-4 flex flex-col gap-3.5">
+        <div className="p-4 flex flex-col gap-3.5 md:w-1/2 md:p-6">
           
           {/* Variety & Repetition Status */}
           <div className="flex items-center justify-between text-xs bg-warm-parchment px-3 py-1.5 rounded-lg border border-border-subtle">
@@ -219,7 +220,7 @@ export const HomeDeck: React.FC<HomeDeckProps> = ({
             </div>
             <div className="flex items-center gap-1 text-warm-gray">
               <Clock className="w-3 h-3" />
-              <span>{dish.prepTimeMinutes + dish.cookingTimeMinutes} mins</span>
+              <span>{(dish.prepTimeMinutes || 0) + dish.cookingTimeMinutes} mins</span>
             </div>
           </div>
 
@@ -279,10 +280,9 @@ export const HomeDeck: React.FC<HomeDeckProps> = ({
               <span>Change</span>
             </button>
           </div>
-        </div>
 
-        {/* Action Decision Buttons */}
-        <div className="p-4 pt-1 pb-4 grid grid-cols-2 gap-2.5 border-t border-border-subtle/60 bg-warm-parchment/40">
+          {/* Action Decision Buttons */}
+          <div className="pt-3 grid grid-cols-2 gap-2.5 mt-auto border-t border-border-subtle/60 md:border-t-0 md:pt-0">
           {/* Secondary: Shuffle Next */}
           <button
             type="button"
@@ -302,6 +302,7 @@ export const HomeDeck: React.FC<HomeDeckProps> = ({
             <Flame className="w-4 h-4 fill-white" />
             <span>Paka Liya! 🍳</span>
           </button>
+        </div>
         </div>
       </div>
 

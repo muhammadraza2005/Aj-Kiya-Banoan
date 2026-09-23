@@ -52,7 +52,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onChangeTab }) 
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-surface-pure/95 backdrop-blur-lg border-t border-border-subtle max-w-[430px] mx-auto shadow-bottom-sheet">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-surface-pure/95 backdrop-blur-lg border-t border-border-subtle max-w-md md:max-w-3xl lg:max-w-5xl mx-auto shadow-bottom-sheet">
       <div className="grid grid-cols-4 items-center h-16 px-2">
         {tabs.map((tab) => {
           const isActive = activeTab === tab.id;

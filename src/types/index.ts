@@ -5,35 +5,36 @@
  * PURPOSE:
  * Defines the single source of truth for all data shapes across "Aaj Kya Banaun?".
  * This domain model is designed to be 100% compatible with the upcoming Supabase
- * PostgreSQL schema outlined in database.md.
- * 
- * DATA FLOW:
- * [Database/Mock Catalog] ──> [Domain Types] ──> [Scoring Engine] ──> [React Components]
- * 
- * WHY THIS PATTERN:
- * Decoupling the domain definitions from UI components ensures that when we connect
- * Supabase client calls, we only swap the data provider layer without rewriting
- * any UI or business calculation logic.
+ * PostgreSQL schema outlined in database.md and backend.md.
  * ============================================================================
  */
 
 /**
  * Supported Pakistani culinary categories.
- * Used for repetition decay algorithms and weekly variety balance checks.
+ * Updated to match the backend.md and database.md specifications.
  */
 export type DishCategory = 
-  | 'karahi_gosht'     // Chicken/Mutton/Beef Karahi & Qorma
-  | 'rice_specialty'   // Biryani, Pulao, Tahari
-  | 'daal_lentils'     // Daal Chawal, Maash, Moong, Chana Daal
-  | 'sabzi_veg'        // Bhindi, Aloo Gobi, Palak Paneer, Baingan Bharta
-  | 'bbq_dry'          // Tikka, Chapli Kabab, Seekh Kabab
-  | 'breakfast_nashta' // Halwa Puri, Nihari, Paye, Anda Ghotala
-  | 'soup_salan';      // Aloo Gosht, Shorba dishes
+  | 'rice'
+  | 'meat'
+  | 'daal'
+  | 'sabzi'
+  | 'side'
+  | 'dry_fruit'
+  | 'fruit'
+  | 'karahi_gosht'     
+  | 'rice_specialty'   
+  | 'daal_lentils'     
+  | 'sabzi_veg'        
+  | 'bbq_dry'          
+  | 'breakfast_nashta' 
+  | 'soup_salan';
+
+export type ProteinSource = 'chicken' | 'mutton' | 'beef' | 'egg' | 'plant' | 'none';
 
 /**
  * Pakistani Accompaniments & Side Pairings
  */
-export type AccompanimentType = 'roti' | 'sada_chawal' | 'baghair_roti';
+export type AccompanimentType = 'roti' | 'rice' | 'naan' | 'none' | 'sada_chawal' | 'baghair_roti';
 
 export interface SmartPairing {
   id: string;
@@ -49,13 +50,13 @@ export interface SmartPairing {
  * Comprehensive nutritional breakdown per standard Desi serving.
  */
 export interface NutritionMetrics {
-  calories: number;        // Total kcal
-  proteinGrams: number;    // Macronutrient: Muscle recovery & satiety
-  carbsGrams: number;      // Macronutrient: Energy base
-  fatsGrams: number;       // Macronutrient: Cooking oil/ghee content
-  ironMg: number;          // Critical micronutrient for Desi households (prevents anemia)
-  zincMg?: number;         // Immunity & metabolic function
-  fiberGrams?: number;     // Digestive health
+  calories: number;        
+  proteinGrams: number;    
+  carbsGrams: number;      
+  fatsGrams: number;       
+  ironMg: number;          
+  zincMg?: number;         
+  fiberGrams?: number;     
 }
 
 /**
@@ -63,18 +64,21 @@ export interface NutritionMetrics {
  */
 export interface Dish {
   id: string;
-  englishName: string;
+  name?: string; // from database.md
+  englishName?: string; // used by existing UI
   urduName: string;
   category: DishCategory;
-  description: string;
-  prepTimeMinutes: number;
+  proteinSource?: ProteinSource; // Added from database.md
+  description?: string;
+  prepTimeMinutes?: number;
   cookingTimeMinutes: number;
-  difficulty: 'Aasan (Easy)' | 'Darmiyana (Medium)' | 'Khaas (Special)';
-  imageUrl: string;
-  imageAlt: string;
+  isQuick?: boolean; // Added from database.md
+  difficulty?: 'Aasan (Easy)' | 'Darmiyana (Medium)' | 'Khaas (Special)';
+  imageUrl?: string;
+  imageAlt?: string;
   nutrition: NutritionMetrics;
-  defaultRotiCount: number;
-  recommendedPairingIds: string[];
+  defaultRotiCount?: number;
+  recommendedPairingIds?: string[];
   tags: string[];
   isAmmiSpecial?: boolean;
 }
@@ -86,15 +90,15 @@ export interface MealLogEntry {
   id: string;
   date: string;            // ISO Date: YYYY-MM-DD
   dishId: string;
-  dishName: string;
-  dishUrduName: string;
-  category: DishCategory;
-  mealType: 'Dopahar (Lunch)' | 'Raat (Dinner)' | 'Nashta (Breakfast)';
-  rotiCount: number;
+  dishName?: string;
+  dishUrduName?: string;
+  category?: DishCategory;
+  mealType?: 'Dopahar (Lunch)' | 'Raat (Dinner)' | 'Nashta (Breakfast)';
+  rotiCount?: number;
   accompaniment: AccompanimentType;
-  selectedPairingIds: string[];
+  selectedPairingIds?: string[];
   totalCalories: number;
-  totalProtein: number;
+  totalProtein?: number;
   notes?: string;
 }
 
@@ -112,8 +116,61 @@ export interface FamilyMember {
 }
 
 /**
- * 7-Day Weekly Variety & Nutritional Health Report.
+ * Reason Generation Engine - Output Format
+ * As per backend.md section 3
  */
+export interface RecommendationReason {
+  type: 'favorite' | 'recency' | 'nutrient' | 'variety' | 'quick' | 'penalty';
+  badgeEn: string;
+  badgeUrdu: string;
+  explanationEn: string;
+  explanationUrdu: string;
+}
+
+/**
+ * Dish Scored Output
+ * As per backend.md section 3
+ */
+export interface ScoredDish {
+  foodId: string;
+  name: string;
+  urduName: string;
+  score: number;
+  tier: 'BEST_CHOICE' | 'ALSO_CONSIDER' | 'AAJ_NAHI';
+  reasons: RecommendationReason[];
+  // Include original dish for UI rendering
+  dish: Dish; 
+}
+
+/**
+ * API Contracts (Next.js Actions)
+ * As per backend.md section 5
+ */
+export interface DailyRecommendationResponse {
+  topPick: ScoredDish | null;        // Tier 1 (Hero Card)
+  alternatives: ScoredDish[];        // Tier 2 (Also Consider - 2 dishes)
+  skipToday: ScoredDish[];           // Tier 3 (Omitted with reason - 1-2 dishes)
+  generatedAt: string;
+}
+
+export interface LogMealPayload {
+  userId: string;
+  foodId: string;
+  mealDate: string;                 // YYYY-MM-DD
+  mealTime: 'lunch' | 'dinner';
+  accompanimentType?: AccompanimentType;
+  accompanimentQuantity: number;    // e.g. 2
+  pairingsSelected: string[];       // ['pairing-salad', 'pairing-badam']
+  totalCalories: number;
+  notes?: string;
+}
+
+export interface WeeklyBalanceSummary {
+  scoreOutOf10: number;
+  varietyVerdict: string;
+  totalMealsLogged: number;
+}
+
 export interface WeeklyVarietyScore {
   scoreOutOf10: number;
   varietyVerdict: string;
