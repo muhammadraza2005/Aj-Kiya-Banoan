@@ -36,6 +36,7 @@ interface HomeDeckProps {
   scoredDishes: ScoredDish[];
   onLogMeal: (log: Omit<MealLogEntry, 'id'>) => void;
   onToggleFavorite: (dishId: string) => void;
+  onDismissDish: (dishId: string) => void;
   favoriteDishIds: string[];
 }
 
@@ -43,6 +44,7 @@ export const HomeDeck: React.FC<HomeDeckProps> = ({
   scoredDishes,
   onLogMeal,
   onToggleFavorite,
+  onDismissDish,
   favoriteDishIds,
 }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -83,7 +85,8 @@ export const HomeDeck: React.FC<HomeDeckProps> = ({
   // Next candidate shuffle
   const handleShuffleNext = () => {
     setJustLogged(false);
-    setCurrentIndex(prev => (prev + 1) % scoredDishes.length);
+    onDismissDish(dish.id);
+    setCurrentIndex(0);
   };
 
   // Cooked CTA

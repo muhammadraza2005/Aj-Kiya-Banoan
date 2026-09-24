@@ -22,6 +22,8 @@
  */
 
 import React, { useState, useMemo, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabase';
 import { TopHeader } from '@/components/layout/TopHeader';
 import { BottomNav, ActiveTab } from '@/components/layout/BottomNav';
 import { HomeDeck } from '@/components/home/HomeDeck';
@@ -33,8 +35,8 @@ import { MOCK_DISHES } from '@/data/mockDishes';
 import { INITIAL_MEAL_HISTORY } from '@/data/mockHistory';
 import { MOCK_FAMILY_MEMBERS } from '@/data/mockFamily';
 import { generateDailyRecommendations } from '@/domain/scoring';
-import { MealLogEntry, WeeklyVarietyScore, ScoredDish, Dish } from '@/types';
-import { fetchDishesFromDB, fetchMealHistory, fetchUserFavorites, logMealToDB, toggleFavoriteInDB } from '@/services/db';
+import { MealLogEntry, WeeklyVarietyScore, ScoredDish, Dish, FamilyMember } from '@/types';
+import { fetchDishesFromDB, fetchMealHistory, fetchUserFavorites, logMealToDB, toggleFavoriteInDB, fetchDismissedDishes, dismissDishInDB, fetchHouseholdProfiles, fetchUserProfile, createProfile } from '@/services/db';
 
 export default function MainPage() {
   // Navigation tab state
@@ -61,19 +63,63 @@ export default function MainPage() {
   }, []);
 
   const [history, setHistory] = useState<MealLogEntry[]>(INITIAL_MEAL_HISTORY);
-  const [familyMembers] = useState(MOCK_FAMILY_MEMBERS);
-  const [activeMemberId, setActiveMemberId] = useState<string>('11111111-1111-1111-1111-111111111111');
+  const [familyMembers, setFamilyMembers] = useState<FamilyMember[]>([]);
+  const [activeMemberId, setActiveMemberId] = useState<string>('');
   const [favoriteDishIds, setFavoriteDishIds] = useState<string[]>([]);
+  const [skippedDishIds, setSkippedDishIds] = useState<string[]>([]);
+  const [moodFilter, setMoodFilter] = useState<string>('');
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    async function checkAuthAndLoadProfiles() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        router.push('/login');
+        return;
+      }
+      
+      const userId = session.user.id;
+      let userProfile = await fetchUserProfile(userId);
+      
+      if (!userProfile) {
+        userProfile = await createProfile({
+          id: userId,
+          display_name: 'Ammi',
+          household_name: 'Hamara Ghar',
+          daily_calorie_target: 2000
+        });
+      }
+      
+      const profiles = await fetchHouseholdProfiles(userProfile.household_name);
+      if (profiles && profiles.length > 0) {
+        const mappedMembers: FamilyMember[] = profiles.map((p: any) => ({
+          id: p.id,
+          name: p.display_name,
+          role: 'Ammi', // Default role for now
+          avatarEmoji: '👩',
+          favoriteDishIds: [],
+          dislikedDishIds: []
+        }));
+        setFamilyMembers(mappedMembers);
+        setActiveMemberId(userId);
+      }
+      setIsAuthLoading(false);
+    }
+    checkAuthAndLoadProfiles();
+  }, [router]);
 
   useEffect(() => {
     async function loadUserData() {
       if (!activeMemberId) return;
       try {
-        const [favs, hist] = await Promise.all([
+        const [favs, hist, dismissed] = await Promise.all([
           fetchUserFavorites(activeMemberId),
-          fetchMealHistory(activeMemberId)
+          fetchMealHistory(activeMemberId),
+          fetchDismissedDishes(activeMemberId)
         ]);
         setFavoriteDishIds(favs);
+        setSkippedDishIds(dismissed);
         
         const mappedHistory: MealLogEntry[] = hist.map((h: any) => ({
           id: h.id,
@@ -85,7 +131,7 @@ export default function MainPage() {
           mealType: h.meal_time === 'lunch' ? 'Dopahar (Lunch)' : 'Raat (Dinner)',
           rotiCount: h.accompaniment_quantity,
           accompaniment: h.accompaniment_type,
-          selectedPairingIds: [], 
+          selectedPairingIds: h.meal_history_pairings ? h.meal_history_pairings.map((p: any) => p.pairing_food_id) : [], 
           totalCalories: h.total_calories,
           notes: h.notes
         }));
@@ -101,13 +147,16 @@ export default function MainPage() {
 
   // Active family member entity
   const activeMember = useMemo(() => {
-    return familyMembers.find(m => m.id === activeMemberId) || familyMembers[0];
-  }, [familyMembers, activeMemberId]);
+    if (familyMembers.length === 0) return null;
+    const member = familyMembers.find(m => m.id === activeMemberId) || familyMembers[0];
+    return { ...member, favoriteDishIds }; // Merge dynamic favorites
+  }, [familyMembers, activeMemberId, favoriteDishIds]);
 
   // Compute live recommendation ranking via scoring engine
   const { topPick, alternatives, skipToday } = useMemo(() => {
-    return generateDailyRecommendations(dishes, history, [activeMember], []);
-  }, [dishes, history, activeMember]);
+    if (!activeMember) return { topPick: null, alternatives: [], skipToday: [] };
+    return generateDailyRecommendations(dishes, history, [activeMember], skippedDishIds, moodFilter);
+  }, [dishes, history, activeMember, skippedDishIds, moodFilter]);
 
   const scoredDishes = useMemo(() => {
     const list: ScoredDish[] = [];
@@ -160,7 +209,7 @@ export default function MainPage() {
         accompaniment_quantity: newLog.rotiCount || 0,
         total_calories: newLog.totalCalories,
         notes: newLog.notes || ''
-      });
+      }, newLog.selectedPairingIds || []);
     } catch (e) {
       console.error('Failed to log meal:', e);
     }
@@ -184,11 +233,25 @@ export default function MainPage() {
     }
   };
 
+  // Handler: Dismiss dish for today (Aaj Nahi)
+  const handleDismissDish = async (dishId: string) => {
+    setSkippedDishIds(prev => [...prev, dishId]);
+    try {
+      await dismissDishInDB(activeMemberId, dishId);
+    } catch (e) {
+      console.error('Failed to dismiss dish:', e);
+    }
+  };
+
   // Handler: "Aaj Ye Banayein" selected from Pasand or Tareekh
   const handleSelectToCook = (dishId: string) => {
     // Switch to Home tab
     setActiveTab('home');
   };
+
+  if (isAuthLoading || !activeMember) {
+    return <div className="min-h-screen bg-warm-parchment flex items-center justify-center text-charcoal-ink font-serif text-xl">Loading...</div>;
+  }
 
   return (
     <div className="w-full min-h-screen bg-warm-parchment desktop-ambient-canvas flex justify-center selection:bg-turmeric-glow selection:text-terracotta-clay">
@@ -206,12 +269,37 @@ export default function MainPage() {
         {/* Scrollable Viewport Canvas */}
         <main className="flex-1 px-4 pt-3 pb-8 flex flex-col">
           {activeTab === 'home' && (
-            <HomeDeck
-              scoredDishes={scoredDishes}
-              onLogMeal={handleLogMeal}
-              onToggleFavorite={handleToggleFavorite}
-              favoriteDishIds={favoriteDishIds}
-            />
+            <>
+              {/* Mood Filters */}
+              <div className="flex gap-2 mb-4 overflow-x-auto pb-2 scrollbar-hide">
+                <button
+                  onClick={() => setMoodFilter(moodFilter === 'quick' ? '' : 'quick')}
+                  className={`flex-none px-4 py-1.5 rounded-full text-xs font-semibold transition-all border ${moodFilter === 'quick' ? 'bg-saffron-amber text-white border-saffron-amber' : 'bg-surface-pure text-warm-gray border-border-subtle hover:border-saffron-amber/50'}`}
+                >
+                  ⚡ Jaldi (&#60;30m)
+                </button>
+                <button
+                  onClick={() => setMoodFilter(moodFilter === 'meat' ? '' : 'meat')}
+                  className={`flex-none px-4 py-1.5 rounded-full text-xs font-semibold transition-all border ${moodFilter === 'meat' ? 'bg-terracotta-clay text-white border-terracotta-clay' : 'bg-surface-pure text-warm-gray border-border-subtle hover:border-terracotta-clay/50'}`}
+                >
+                  🥩 Gosht
+                </button>
+                <button
+                  onClick={() => setMoodFilter(moodFilter === 'veg' ? '' : 'veg')}
+                  className={`flex-none px-4 py-1.5 rounded-full text-xs font-semibold transition-all border ${moodFilter === 'veg' ? 'bg-cardamom-emerald text-white border-cardamom-emerald' : 'bg-surface-pure text-warm-gray border-border-subtle hover:border-cardamom-emerald/50'}`}
+                >
+                  🥬 Sabzi / Daal
+                </button>
+              </div>
+
+              <HomeDeck
+                scoredDishes={scoredDishes}
+                onLogMeal={handleLogMeal}
+                onToggleFavorite={handleToggleFavorite}
+                onDismissDish={handleDismissDish}
+                favoriteDishIds={favoriteDishIds}
+              />
+            </>
           )}
 
           {activeTab === 'tareekh' && (

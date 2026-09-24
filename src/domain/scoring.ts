@@ -165,14 +165,19 @@ export function scoreDish(
   // ==========================================
   if (moodFilter) {
     if (moodFilter === 'quick' && dish.cookingTimeMinutes <= 30) {
-      totalScore += 10;
+      totalScore += 20;
       reasons.push({ type: 'quick', badgeEn: 'Under 30 mins', badgeUrdu: '30 منٹ سے کم', explanationEn: 'Quick to cook, matches your mood.', explanationUrdu: 'جلدی تیار ہونے والا کھانا۔' });
     }
-    // E.g., if filter is 'meat' and category is meat
     if (moodFilter === 'meat' && (dish.category === 'meat' || dish.proteinSource === 'chicken' || dish.proteinSource === 'beef' || dish.proteinSource === 'mutton')) {
-      totalScore += 10;
+      totalScore += 20;
+      reasons.push({ type: 'meat', badgeEn: 'Meat Lover', badgeUrdu: 'گوشت کی خواہش', explanationEn: 'Satisfies your craving for meat.', explanationUrdu: 'گوشت کی خواہش پوری کرتا ہے۔' });
+    }
+    if (moodFilter === 'veg' && (dish.category === 'sabzi' || dish.category === 'daal' || dish.proteinSource === 'plant' || dish.proteinSource === 'none')) {
+      totalScore += 20;
+      reasons.push({ type: 'veg', badgeEn: 'Vegetarian', badgeUrdu: 'سبزی یا دال', explanationEn: 'A healthy plant-based choice.', explanationUrdu: 'سبزی اور دال کا صحت بخش انتخاب۔' });
     }
   }
+
 
   // ==========================================
   // 6. SKIP TODAY PENALTY

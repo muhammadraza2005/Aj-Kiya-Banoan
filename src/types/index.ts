@@ -120,7 +120,7 @@ export interface FamilyMember {
  * As per backend.md section 3
  */
 export interface RecommendationReason {
-  type: 'favorite' | 'recency' | 'nutrient' | 'variety' | 'quick' | 'penalty';
+  type: 'favorite' | 'recency' | 'nutrient' | 'variety' | 'quick' | 'penalty' | 'meat' | 'veg';
   badgeEn: string;
   badgeUrdu: string;
   explanationEn: string;

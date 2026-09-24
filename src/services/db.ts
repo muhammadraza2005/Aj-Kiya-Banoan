@@ -1,6 +1,46 @@
 import { supabase } from '@/lib/supabase';
 import { Dish } from '@/types';
 
+export async function fetchUserProfile(userId: string) {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', userId)
+    .single();
+    
+  if (error && error.code !== 'PGRST116') {
+    console.error('Error fetching profile:', error);
+  }
+  return data;
+}
+
+export async function createProfile(profile: any) {
+  const { data, error } = await supabase
+    .from('profiles')
+    .insert([profile])
+    .select()
+    .single();
+
+  if (error) {
+    console.error('Error creating profile:', error);
+    throw error;
+  }
+  return data;
+}
+
+export async function fetchHouseholdProfiles(householdName: string) {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('household_name', householdName);
+
+  if (error) {
+    console.error('Error fetching household profiles:', error);
+    return [];
+  }
+  return data;
+}
+
 export async function fetchDishesFromDB(): Promise<Dish[]> {
   const { data, error } = await supabase
     .from('foods')
@@ -58,6 +98,9 @@ export async function fetchMealHistory(userId: string): Promise<any[]> {
         name,
         urdu_name,
         category
+      ),
+      meal_history_pairings (
+        pairing_food_id
       )
     `)
     .eq('user_id', userId)
@@ -70,7 +113,7 @@ export async function fetchMealHistory(userId: string): Promise<any[]> {
   return data;
 }
 
-export async function logMealToDB(logData: any) {
+export async function logMealToDB(logData: any, pairingFoodIds: string[] = []) {
   const { data, error } = await supabase
     .from('meal_history')
     .insert([logData])
@@ -81,6 +124,24 @@ export async function logMealToDB(logData: any) {
     console.error('Error logging meal:', error);
     throw error;
   }
+
+  // Insert pairings if any
+  if (data && data.id && pairingFoodIds.length > 0) {
+    const pairingsToInsert = pairingFoodIds.map(id => ({
+      meal_history_id: data.id,
+      pairing_food_id: id,
+      timing: 'with_meal'
+    }));
+
+    const { error: pairingError } = await supabase
+      .from('meal_history_pairings')
+      .insert(pairingsToInsert);
+
+    if (pairingError) {
+      console.error('Error logging pairings:', pairingError);
+    }
+  }
+
   return data;
 }
 
@@ -114,6 +175,41 @@ export async function toggleFavoriteInDB(userId: string, foodId: string, isFavor
   if (error) {
     console.error('Error toggling favorite:', error);
     throw error;
+  }
+  return data;
+}
+
+export async function fetchDismissedDishes(userId: string): Promise<string[]> {
+  const today = new Date().toISOString().split('T')[0];
+  const { data, error } = await supabase
+    .from('daily_dismissals')
+    .select('food_id')
+    .eq('user_id', userId)
+    .eq('dismissed_date', today);
+
+  if (error) {
+    console.error('Error fetching dismissed dishes:', error);
+    return [];
+  }
+  return data.map((d: any) => d.food_id);
+}
+
+export async function dismissDishInDB(userId: string, foodId: string) {
+  const today = new Date().toISOString().split('T')[0];
+  const { data, error } = await supabase
+    .from('daily_dismissals')
+    .insert([{
+      user_id: userId,
+      food_id: foodId,
+      dismissed_date: today
+    }]);
+
+  if (error) {
+    // Ignore duplicate key errors if already dismissed today
+    if (error.code !== '23505') {
+      console.error('Error dismissing dish:', error);
+      throw error;
+    }
   }
   return data;
 }

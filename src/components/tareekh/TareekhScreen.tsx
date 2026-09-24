@@ -189,12 +189,14 @@ export const TareekhScreen: React.FC<TareekhScreenProps> = ({
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-2 mt-1">
+                  <div className="flex items-center gap-2 mt-1 flex-wrap">
                     <span className={`text-[9px] font-semibold px-1.5 py-0.5 rounded border ${badge.color}`}>
                       {badge.label}
                     </span>
                     <span className="text-[10px] text-warm-gray">
-                      ~{log.totalCalories} kcal • {log.totalProtein}g protein
+                      ~{log.totalCalories} kcal
+                      {log.totalProtein ? ` • ${log.totalProtein}g protein` : ''}
+                      {log.selectedPairingIds && log.selectedPairingIds.length > 0 && ` • +${log.selectedPairingIds.length} Sides`}
                     </span>
                   </div>
                 </div>
