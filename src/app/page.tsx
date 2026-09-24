@@ -60,6 +60,11 @@ export default function MainPage() {
     loadDishes();
   }, []);
 
+  const [history, setHistory] = useState<MealLogEntry[]>(INITIAL_MEAL_HISTORY);
+  const [familyMembers] = useState(MOCK_FAMILY_MEMBERS);
+  const [activeMemberId, setActiveMemberId] = useState<string>('11111111-1111-1111-1111-111111111111');
+  const [favoriteDishIds, setFavoriteDishIds] = useState<string[]>([]);
+
   useEffect(() => {
     async function loadUserData() {
       if (!activeMemberId) return;

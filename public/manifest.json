@@ -1,0 +1,16 @@
+{
+  "name": "Aaj Kya Banaun?",
+  "short_name": "Aaj Kya Banaun",
+  "description": "Smart Pakistani daily meal recommendation and nutritional variety tracker for households.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFF8E1",
+  "theme_color": "#E65100",
+  "icons": [
+    {
+      "src": "/globe.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

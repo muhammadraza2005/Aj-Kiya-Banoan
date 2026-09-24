@@ -230,10 +230,10 @@ export function generateDailyRecommendations(
     alternatives = alternatives.filter(d => d.foodId !== topPick!.foodId);
   }
 
-  // Only take top 2 alternatives and top 2 skipped for the UI payload
+  // Return all alternatives to allow continuous shuffling on the Home screen
   return {
     topPick,
-    alternatives: alternatives.slice(0, 2),
-    skipToday: aajNahi.slice(0, 2)
+    alternatives: alternatives,
+    skipToday: aajNahi
   };
 }
