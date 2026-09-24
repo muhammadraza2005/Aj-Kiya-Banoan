@@ -15,11 +15,10 @@
 import { DailyRecommendationResponse, LogMealPayload, WeeklyBalanceSummary } from '@/types';
 import { generateDailyRecommendations } from '@/domain/scoring';
 import { MOCK_DISHES } from '@/data/mockDishes';
-import { INITIAL_MEAL_HISTORY } from '@/data/mockHistory';
 import { MOCK_FAMILY_MEMBERS } from '@/data/mockFamily';
 
 // In-memory state for demonstration until DB is hooked up
-let currentHistory = [...INITIAL_MEAL_HISTORY];
+let currentHistory: any[] = [];
 let currentDismissed: string[] = [];
 
 /**

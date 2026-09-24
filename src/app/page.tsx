@@ -32,11 +32,10 @@ import { PasandScreen } from '@/components/pasand/PasandScreen';
 import { FamilyScreen } from '@/components/family/FamilyScreen';
 
 import { MOCK_DISHES } from '@/data/mockDishes';
-import { INITIAL_MEAL_HISTORY } from '@/data/mockHistory';
 import { MOCK_FAMILY_MEMBERS } from '@/data/mockFamily';
 import { generateDailyRecommendations } from '@/domain/scoring';
 import { MealLogEntry, WeeklyVarietyScore, ScoredDish, Dish, FamilyMember } from '@/types';
-import { fetchDishesFromDB, fetchMealHistory, fetchUserFavorites, logMealToDB, toggleFavoriteInDB, fetchDismissedDishes, dismissDishInDB, fetchHouseholdProfiles, fetchUserProfile, createProfile } from '@/services/db';
+import { fetchDishesFromDB, fetchMealHistory, fetchUserFavorites, logMealToDB, toggleFavoriteInDB, fetchDismissedDishes, dismissDishInDB, fetchHouseholdProfiles, fetchUserProfile, createProfile, deleteMealFromDB } from '@/services/db';
 
 export default function MainPage() {
   // Navigation tab state
@@ -62,7 +61,7 @@ export default function MainPage() {
     loadDishes();
   }, []);
 
-  const [history, setHistory] = useState<MealLogEntry[]>(INITIAL_MEAL_HISTORY);
+  const [history, setHistory] = useState<MealLogEntry[]>([]);
   const [familyMembers, setFamilyMembers] = useState<FamilyMember[]>([]);
   const [activeMemberId, setActiveMemberId] = useState<string>('');
   const [favoriteDishIds, setFavoriteDishIds] = useState<string[]>([]);
@@ -136,8 +135,8 @@ export default function MainPage() {
           notes: h.notes
         }));
         
-        // Only override if there is actual history or it's a fresh load
-        setHistory(mappedHistory.length > 0 ? mappedHistory : INITIAL_MEAL_HISTORY);
+        // Set history to fetched data (could be empty for new users)
+        setHistory(mappedHistory);
       } catch (err) {
         console.error('Failed to load user data:', err);
       }
@@ -200,7 +199,7 @@ export default function MainPage() {
     setHistory(prev => [createdEntry, ...prev]);
 
     try {
-      await logMealToDB({
+      const data = await logMealToDB({
         user_id: activeMemberId,
         food_id: newLog.dishId,
         meal_date: newLog.date,
@@ -210,8 +209,15 @@ export default function MainPage() {
         total_calories: newLog.totalCalories,
         notes: newLog.notes || ''
       }, newLog.selectedPairingIds || []);
+
+      // Replace the temporary ID with the real database UUID
+      if (data && data.id) {
+        setHistory(prev => prev.map(log => log.id === tempId ? { ...log, id: data.id } : log));
+      }
     } catch (e) {
       console.error('Failed to log meal:', e);
+      // Revert optimistic add
+      setHistory(prev => prev.filter(log => log.id !== tempId));
     }
   };
 
@@ -240,6 +246,26 @@ export default function MainPage() {
       await dismissDishInDB(activeMemberId, dishId);
     } catch (e) {
       console.error('Failed to dismiss dish:', e);
+    }
+  };
+
+  // Handler: Delete meal from history
+  const handleDeleteMeal = async (logId: string) => {
+    const isConfirmed = window.confirm("Are you sure you want to delete this meal from your history?");
+    if (!isConfirmed) return;
+
+    // If it's a temporary ID, it means it hasn't synced to the DB yet, or we shouldn't attempt DB delete.
+    // Wait, by the time they click it, it should have the real ID thanks to the update above.
+    // However, if they manage to click it super fast, we just remove it locally.
+    setHistory(prev => prev.filter(log => log.id !== logId));
+
+    if (!logId.startsWith('log-')) {
+      try {
+        await deleteMealFromDB(logId);
+      } catch (e) {
+        console.error('Failed to delete meal:', e);
+        // Ideally, revert optimistic update here, but for simplicity we log the error
+      }
     }
   };
 
@@ -293,6 +319,7 @@ export default function MainPage() {
               </div>
 
               <HomeDeck
+                key={activeMemberId}
                 scoredDishes={scoredDishes}
                 onLogMeal={handleLogMeal}
                 onToggleFavorite={handleToggleFavorite}
@@ -307,6 +334,7 @@ export default function MainPage() {
               history={history}
               varietyScore={varietyScore}
               onCookAgain={handleSelectToCook}
+              onDeleteMeal={handleDeleteMeal}
             />
           )}
 

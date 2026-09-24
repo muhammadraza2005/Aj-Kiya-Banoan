@@ -30,28 +30,25 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
   streakDays = 5,
 }) => {
   return (
-    <header className="sticky top-0 z-30 bg-warm-parchment/95 backdrop-blur-md border-b border-border-subtle/80 px-4 py-3">
-      <div className="flex items-center justify-between max-w-lg mx-auto">
+    <header className="sticky top-0 z-30 bg-warm-parchment/95 backdrop-blur-md border-b border-border-subtle/80 px-4 py-3 w-full overflow-hidden">
+      <div className="flex items-center justify-between w-full">
         {/* Left: Brand Identity & Urdu Calligraphy */}
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20 shadow-sm">
             <ChefHat className="w-5 h-5 text-saffron-amber" />
           </div>
-          <div>
-            <h1 className="font-urdu text-xl font-bold text-primary leading-tight">
+          <div className="flex items-center">
+            <h1 className="font-urdu text-xl font-bold text-primary leading-none">
               آج کیا بناؤں؟
             </h1>
-            <p className="text-[11px] font-sans font-medium text-warm-gray tracking-tight">
-              Desi Kitchen Companion
-            </p>
           </div>
         </div>
 
         {/* Right: Active Persona Selector Pill & Streak */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 shrink-0">
           {/* Variety Streak Badge */}
           <div 
-            className="flex items-center gap-1 bg-turmeric-glow border border-saffron-amber/30 text-saffron-amber px-2 py-1 rounded-full text-xs font-semibold shadow-xs"
+            className="flex items-center gap-1 bg-turmeric-glow border border-saffron-amber/30 text-saffron-amber px-2 py-1 rounded-full text-xs font-semibold shadow-xs shrink-0"
             title="5 days of balanced cooking variety!"
           >
             <Sparkles className="w-3.5 h-3.5 text-saffron-amber animate-pulse" />

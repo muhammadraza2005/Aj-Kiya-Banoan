@@ -214,3 +214,24 @@ export async function dismissDishInDB(userId: string, foodId: string) {
   return data;
 }
 
+export async function deleteMealFromDB(logId: string) {
+  // First delete any associated pairings to prevent foreign key constraint violations
+  const { error: pairingError } = await supabase
+    .from('meal_history_pairings')
+    .delete()
+    .eq('meal_history_id', logId);
+
+  if (pairingError) {
+    console.error('Error deleting meal pairings:', pairingError);
+  }
+
+  const { error } = await supabase
+    .from('meal_history')
+    .delete()
+    .eq('id', logId);
+
+  if (error) {
+    console.error('Error deleting meal log:', error);
+    throw error;
+  }
+}

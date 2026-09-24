@@ -99,6 +99,33 @@ export function scoreDish(
   }
 
   // ==========================================
+  // 1b. DEMO PERSONALIZATION BY PROFILE
+  // ==========================================
+  const memberName = family[0]?.name?.toLowerCase() || '';
+  if (memberName.includes('abu') || memberName.includes('dad')) {
+    if (dish.proteinSource === 'beef' || dish.proteinSource === 'mutton') {
+      totalScore += 30; // Strong boost to ensure different top picks
+      reasons.push({ type: 'meat', badgeEn: "Abu's Preference", badgeUrdu: "ابو کی پسند", explanationEn: 'Abu usually prefers rich meat dishes.', explanationUrdu: 'ابو کو گوشت پسند ہے۔' });
+    }
+  } else if (memberName.includes('beta') || memberName.includes('son')) {
+    if (dish.proteinSource === 'chicken' || dish.category === 'rice') {
+      totalScore += 30;
+      reasons.push({ type: 'favorite', badgeEn: "Beta's Pick", badgeUrdu: "بیٹے کی پسند", explanationEn: 'Beta loves chicken and rice dishes.', explanationUrdu: 'بیٹے کو چکن اور چاول پسند ہیں۔' });
+    }
+  } else if (memberName.includes('beti') || memberName.includes('daughter')) {
+    if (dish.category === 'sabzi' || dish.category === 'daal') {
+      totalScore += 30;
+      reasons.push({ type: 'veg', badgeEn: "Beti's Pick", badgeUrdu: "بیٹی کی پسند", explanationEn: 'Beti prefers lighter, plant-based meals.', explanationUrdu: 'بیٹی کو سبزیاں پسند ہیں۔' });
+    }
+  } else {
+    // Ammi or default
+    if (dish.nutrition.fiberGrams >= 4 || dish.category === 'daal') {
+      totalScore += 20;
+      reasons.push({ type: 'nutrient', badgeEn: "Ammi's Healthy Pick", badgeUrdu: "امی کا انتخاب", explanationEn: 'Ammi ensures balanced, healthy meals.', explanationUrdu: 'امی صحت بخش کھانا پسند کرتی ہیں۔' });
+    }
+  }
+
+  // ==========================================
   // 2. RECENCY & REPETITION PENALTY
   // ==========================================
   const exactLogs = history.filter(h => h.dishId === dish.id).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());

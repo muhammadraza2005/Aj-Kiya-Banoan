@@ -85,8 +85,7 @@ export const HomeDeck: React.FC<HomeDeckProps> = ({
   // Next candidate shuffle
   const handleShuffleNext = () => {
     setJustLogged(false);
-    onDismissDish(dish.id);
-    setCurrentIndex(0);
+    setCurrentIndex(prev => prev + 1);
   };
 
   // Cooked CTA

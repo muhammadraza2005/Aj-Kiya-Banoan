@@ -23,7 +23,8 @@ import {
   Sparkles, 
   UtensilsCrossed, 
   Flame,
-  ArrowRight
+  ArrowRight,
+  X
 } from 'lucide-react';
 import { MealLogEntry, WeeklyVarietyScore } from '@/types';
 
@@ -31,12 +32,14 @@ interface TareekhScreenProps {
   history: MealLogEntry[];
   varietyScore: WeeklyVarietyScore;
   onCookAgain: (dishId: string) => void;
+  onDeleteMeal: (logId: string) => void;
 }
 
 export const TareekhScreen: React.FC<TareekhScreenProps> = ({
   history,
   varietyScore,
   onCookAgain,
+  onDeleteMeal,
 }) => {
   const { scoreOutOf10, varietyVerdict, categoryBreakdown, nutritionHighlights } = varietyScore;
 
@@ -161,59 +164,73 @@ export const TareekhScreen: React.FC<TareekhScreenProps> = ({
           <span>Past 7 Days History</span>
         </h3>
 
-        {history.map((log) => {
-          const badge = getCategoryBadge(log.category);
-          return (
-            <div
-              key={log.id}
-              className="bg-surface-pure rounded-xl border border-border-subtle p-3.5 shadow-xs flex items-center justify-between gap-3 hover:border-saffron-amber/40 transition-all"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-warm-parchment flex items-center justify-center text-charcoal-ink border border-border-subtle shrink-0">
-                  <UtensilsCrossed className="w-4 h-4 text-saffron-amber" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[11px] font-bold text-saffron-amber">
-                      {formatFriendlyDate(log.date)}
-                    </span>
-                    <span className="text-[10px] text-warm-gray">• {(log.mealType || '').split(' ')[0]}</span>
-                  </div>
-
-                  <div className="flex items-center gap-1.5 mt-0.5">
-                    <h4 className="font-serif text-sm font-bold text-charcoal-ink leading-tight">
-                      {log.dishName}
-                    </h4>
-                    <span className="font-urdu text-xs text-terracotta-clay">
-                      ({log.dishUrduName})
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-2 mt-1 flex-wrap">
-                    <span className={`text-[9px] font-semibold px-1.5 py-0.5 rounded border ${badge.color}`}>
-                      {badge.label}
-                    </span>
-                    <span className="text-[10px] text-warm-gray">
-                      ~{log.totalCalories} kcal
-                      {log.totalProtein ? ` • ${log.totalProtein}g protein` : ''}
-                      {log.selectedPairingIds && log.selectedPairingIds.length > 0 && ` • +${log.selectedPairingIds.length} Sides`}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => onCookAgain(log.dishId)}
-                className="w-8 h-8 rounded-lg bg-warm-parchment hover:bg-turmeric-glow hover:text-saffron-amber text-warm-gray flex items-center justify-center transition-colors shrink-0"
-                title="View or Cook Again"
-                aria-label="View dish details"
-              >
-                <ArrowRight className="w-4 h-4" />
-              </button>
+        {history.length === 0 ? (
+          <div className="md:col-span-2 lg:col-span-3 bg-surface-pure rounded-xl border border-dashed border-border-subtle p-8 flex flex-col items-center justify-center text-center gap-3">
+            <div className="w-12 h-12 rounded-full bg-warm-parchment flex items-center justify-center text-warm-gray">
+              <UtensilsCrossed className="w-6 h-6 opacity-50" />
             </div>
-          );
-        })}
+            <div>
+              <p className="font-serif text-charcoal-ink font-bold">No meals logged yet</p>
+              <p className="text-xs text-warm-gray mt-1">
+                Your past 7 days history will appear here once you start logging meals.
+              </p>
+            </div>
+          </div>
+        ) : (
+          history.map((log) => {
+            const badge = getCategoryBadge(log.category);
+            return (
+              <div
+                key={log.id}
+                className="bg-surface-pure rounded-xl border border-border-subtle p-3.5 shadow-xs flex items-center justify-between gap-3 hover:border-saffron-amber/40 transition-all"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-warm-parchment flex items-center justify-center text-charcoal-ink border border-border-subtle shrink-0">
+                    <UtensilsCrossed className="w-4 h-4 text-saffron-amber" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[11px] font-bold text-saffron-amber">
+                        {formatFriendlyDate(log.date)}
+                      </span>
+                      <span className="text-[10px] text-warm-gray">• {(log.mealType || '').split(' ')[0]}</span>
+                    </div>
+
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      <h4 className="font-serif text-sm font-bold text-charcoal-ink leading-tight">
+                        {log.dishName}
+                      </h4>
+                      <span className="font-urdu text-xs text-terracotta-clay">
+                        ({log.dishUrduName})
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2 mt-1 flex-wrap">
+                      <span className={`text-[9px] font-semibold px-1.5 py-0.5 rounded border ${badge.color}`}>
+                        {badge.label}
+                      </span>
+                      <span className="text-[10px] text-warm-gray">
+                        ~{log.totalCalories} kcal
+                        {log.totalProtein ? ` • ${log.totalProtein}g protein` : ''}
+                        {log.selectedPairingIds && log.selectedPairingIds.length > 0 && ` • +${log.selectedPairingIds.length} Sides`}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => onDeleteMeal(log.id)}
+                  className="w-8 h-8 rounded-lg bg-warm-parchment hover:bg-terracotta-clay/10 hover:text-terracotta-clay text-warm-gray flex items-center justify-center transition-colors shrink-0"
+                  title="Delete from History"
+                  aria-label="Delete meal from history"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            );
+          })
+        )}
       </div>
     </div>
   );

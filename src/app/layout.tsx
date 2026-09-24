@@ -64,6 +64,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${jakarta.variable} ${playfair.variable} ${nastaliq.variable}`}>
+      <head>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+      </head>
       <body className="min-h-screen bg-warm-parchment text-charcoal-ink flex justify-center antialiased selection:bg-turmeric-glow selection:text-terracotta-clay">
         {children}
       </body>
