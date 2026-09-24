@@ -13,7 +13,7 @@ import { FamilyMember } from '@/types';
 
 export const MOCK_FAMILY_MEMBERS: FamilyMember[] = [
   {
-    id: 'fam-ammi',
+    id: '11111111-1111-1111-1111-111111111111',
     name: 'Ammi Jaan',
     role: 'Ammi',
     avatarEmoji: '👩‍🍳',
@@ -22,7 +22,7 @@ export const MOCK_FAMILY_MEMBERS: FamilyMember[] = [
     dietaryNotes: 'Prefers lighter oil and balanced nutrition for the family'
   },
   {
-    id: 'fam-abu',
+    id: '22222222-2222-2222-2222-222222222222',
     name: 'Abu',
     role: 'Abu',
     avatarEmoji: '🧔',
@@ -31,7 +31,7 @@ export const MOCK_FAMILY_MEMBERS: FamilyMember[] = [
     dietaryNotes: 'Loves traditional salan with bone-in mutton and authentic spices'
   },
   {
-    id: 'fam-son',
+    id: '33333333-3333-3333-3333-333333333333',
     name: 'Raza (Beta)',
     role: 'Beta',
     avatarEmoji: '👦',
